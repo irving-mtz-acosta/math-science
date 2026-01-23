@@ -2,23 +2,38 @@
 title: "Irving Mtz Acosta"
 ---
 
-::: {.columns}
+::: {.columns .hero}
+
+
+::: {.column width="40%"}
+
+<div class="profile-card">
+
+<img src="images/profile.jpg" class="profile-img">
+
+<h3>Irving Mtz Acosta</h3>
+<p class="subtitle">Mathematical Scientist</p>
+
+<div class="links">
+<a href="mailto:you@email.com">Email</a>
+<a href="https://github.com/irving-mtz-acosta">GitHub</a>
+<a href="files/cv.pdf">CV</a>
+</div>
+
+</div>
+
 ::: {.column width="65%"}
 
-### About me
+## About
 
-I am a mathematical scientist working on applied mathematics, PDEs, and
-scientific computing. My research interests include numerical analysis,
-data‑driven modeling, and inverse problems.
+I am a mathematical scientist working on applied mathematics,
+scientific computing, and modeling. My interests include numerical
+analysis, PDEs, inverse problems, and data‑driven methods.
 
-I currently focus on bridging theory and computation, with applications
-to physical and biological systems.
+I focus on bridging mathematical theory with computational practice,
+with applications in physics and engineering.
 
 :::
-
-::: {.column width="35%"}
-
-![](Images/bergen_me.JPG){width=100%}
 
 :::
 :::
