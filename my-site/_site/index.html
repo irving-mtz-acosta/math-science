@@ -218,13 +218,13 @@ window.Quarto = {
 <section id="code-cell" class="level2">
 <h2 class="anchored" data-anchor-id="code-cell">Code Cell</h2>
 <p>Here is a Python code cell:</p>
-<div id="5cdabfdb" class="cell" data-execution_count="1">
+<div id="38825e39" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>os.cpu_count()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="1">
+<div class="cell-output cell-output-display" data-execution_count="4">
 <pre><code>10</code></pre>
 </div>
 </div>
@@ -237,7 +237,7 @@ window.Quarto = {
 \]</span> <span class="math display">\[
 f_m \to f \quad \text{in } C^{\infty}
 \]</span></p>
-<div id="3f628b77" class="cell" data-execution_count="2">
+<div id="5fc7f1a1" class="cell" data-execution_count="2">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="bu">sum</span> <span class="op">=</span> <span class="dv">0</span></span>
@@ -282,6 +282,7 @@ Figure&nbsp;1: A line plot on a polar axis
 </div>
 </div>
 </div>
+<p>This worked</p>
 
 
 </section>
@@ -360,7 +361,7 @@ Figure&nbsp;1: A line plot on a polar axis
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp('/' + window.location.host + '/');
+        var filterRegex = new RegExp("https:\/\/irving-mtz-acosta\.github\.io\/math-science\/");
       var isInternal = (href) => {
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }
