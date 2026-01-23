@@ -1,0 +1,8 @@
+# Quarto output
+_site/
+.quarto/
+
+# OS junk
+.DS_Store
+
+
