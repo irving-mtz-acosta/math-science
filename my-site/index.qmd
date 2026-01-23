@@ -31,14 +31,6 @@ $$
 f_m \to f \quad \text{in } C^{\infty}
 $$
 
-```{python}
-sum = 0
-n = 1000
-for i in range(n):
-    sum += i
-print("Sum of first ", n, "integers is ", sum)
-```
-
 
 
 ---
