@@ -3,6 +3,7 @@ project:
 
 website:
   title: "Irving Martinez"
+  site-url: https://irving-mtz-acosta.github.io/math-science/
   navbar:
     left:
       - href: index.qmd
