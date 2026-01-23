@@ -17,10 +17,12 @@
 /* Profile image */
 .profile-img {
   width: 140px;
+  max-width: 100%;
   height: 140px;
   object-fit: cover;
   border-radius: 50%;
-  margin-bottom: 1rem;
+  margin: 0 auto 1rem auto;
+  display: block;
 }
 
 /* Name */
