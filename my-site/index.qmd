@@ -9,7 +9,7 @@ title: "Irving Mtz Acosta"
 
 <div class="profile-card">
 
-<img src="images/profile.jpg" class="profile-img">
+<img src="Images/bergen_me.JPG" class="profile-img">
 
 <h3>Irving Mtz Acosta</h3>
 <p class="subtitle">Mathematical Scientist</p>
