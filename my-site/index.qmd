@@ -3,7 +3,7 @@
 about:
   template: jolla
   id: about-block
-  image: "Images/bergen_me.jpg"
+  image: "Images/bergen_me.JPG"
   links:
     - icon: github
       text: Github
