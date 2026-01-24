@@ -1,22 +1,95 @@
+#project:
+#  type: website
+
+#website:
+#  title: "Irving Martinez"
+#  site-url: https://irving-mtz-acosta.github.io/math-science/
+#  navbar:
+#    left:
+#      - href: index.qmd
+#        text: Home
+#      - about.qmd
+
+#format:
+#  html:
+#    theme:
+#      - cosmo
+#      - brand
+#    css: styles.scss
+#    toc: true
+
+# website settings
+website:
+  title: "Irving Martínez Acosta"                                # Your name
+  #description: "Gandalf is a renowned wizard and scholar of Middle-earth"   # A brief slogan (optional)
+  image: Images/cph_me.jpg
+  
+  #favicon: img/favicon.png
+  
+  # start of the navigation bar at the top of the website
+  navbar:
+    pinned: true
+    #logo: /img/logo.png
+    
+    # your sub-pages
+    left:
+      - text: "Projects"
+        #href: projects/index.qmd
+      - text: "Mathematics"
+        #href: mathematics/index.qmd
+      - text: "Interests"
+        #href: photography/index.qmd
+      - text: "CV"
+        #href: cv/index.qmd
+    
+    # your social media handles
+    right:
+      - icon: folder-symlink
+        #href: https://www.marvinschmitt.com/blog/website-tutorial-quarto/
+      - icon: linkedin
+        #href: https://www.linkedin.com/in/marvin-schmitt-a85b321a2/
+      - icon: envelope
+        aria-label: email
+        #href: "mailto:mail.marvinschmitt@gmail.com"  
+  
+  
+
+# Don't touch unless you know what you are doing :) ------------
+  search: 
+    location: navbar
+    type: textbox
+  page-footer: 
+    left: |
+      Irving Martínez Acosta 2026
+    #  <span class="faux-block">&#169; 2023 Marvin Schmitt CC BY-SA 4.0</span>
+    #center: |
+    #  <span class="faux-block"><a href="https://www.marvinschmitt.com/blog/website-tutorial-quarto/">View the tutorial for this template!</a></span>
+    #right: |
+    #  <span class="faux-block"><a href="https://github.com/marvinschmitt/quarto-website-template/">View source on GitHub</a></span>
+
 project:
   type: website
+  output-dir: docs
 
-website:
-  title: "Irving Martinez"
-  site-url: https://irving-mtz-acosta.github.io/math-science/
-  navbar:
-    left:
-      - href: index.qmd
-        text: Home
-      - about.qmd
+  preview: 
+    port: 22222
+    browser: true
+    watch-inputs: true
+    navigate: true
+
+execute:
+  freeze: true
 
 format:
   html:
-    theme:
-      - cosmo
-      - brand
-    css: styles.scss
-    toc: true
-
-
+    fontsize: 1.1em
+    theme: 
+      - pulse
+      - html/styles.scss
+    toc: false
+    code-link: true
+    anchor-sections: true
+    fig-cap-location: margin
+    reference-location: margin
+    footnotes-hover: true
 
