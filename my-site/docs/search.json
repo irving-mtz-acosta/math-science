@@ -39,7 +39,7 @@
     "href": "index.html#about",
     "title": "Irving Martínez Acosta",
     "section": "About",
-    "text": "About\nI am a mathematical scientist working on applied mathematics, scientific computing, and modeling. My interests include numerical analysis, PDEs, inverse problems, and data‑driven methods.\nI focus on bridging mathematical theory with computational practice, with applications in physics and engineering."
+    "text": "About\nI am a mathematical scientist working on applied mathematics, scientific computing, and modeling. My interests include numerical analysis, PDEs, inverse problems, and data‑driven methods.\nI focus on bridging mathematical theory with computational practice, with applications in physics and engineering.\n\nimport numpy as np\nimport matplotlib.pyplot as plt\n\nr = np.arange(0, 2, 0.01)\ntheta = 2 * np.pi * r\nfig, ax = plt.subplots(\n  subplot_kw = {'projection': 'polar'} \n)\nax.plot(theta, r)\nax.set_rticks([0.5, 1, 1.5, 2])\nax.grid(True)\nplt.show()\n\n\n\n\n\n\n\nFigure 1: A line plot on a polar axis\n\n\n\n\n\n\\[\nf_m \\to f \\quad \\text{in } C^{\\infty}\n\\]"
   },
   {
     "objectID": "about.html",
