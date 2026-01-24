@@ -1,4 +1,24 @@
 
+---
+about:
+  template: jolla
+  id: about-block
+  image: "Images/bergen_me.jpg"
+  links:
+    - icon: github
+      text: Github
+    - icon: linkedin
+      text: LinkedIn
+    - icon: envelope
+      text: Email
+      href: "mailto:irving915656@gmail.com"  
+---
+
+::: {#about-block}
+:::
+
+
+
 ## About
 
 I am a mathematical scientist working on applied mathematics,
@@ -9,4 +29,3 @@ I focus on bridging mathematical theory with computational practice,
 with applications in physics and engineering.
 
 
-:::
