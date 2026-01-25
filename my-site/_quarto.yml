@@ -40,7 +40,7 @@ website:
       - text: "Interests"
         #href: photography/index.qmd
       - text: "CV"
-        #href: cv/index.qmd
+        href: cv/index.qmd
     
     # your social media handles
     right:
