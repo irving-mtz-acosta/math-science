@@ -11,7 +11,7 @@ title: Projects
   <i class="arrow-down"></i>
 </div>
 
-<div class="arrow-center" style ="color:#eb4a57">
+<div class="arrow-center" style ="color:#f05f6b">
   <i class="arrow-down"></i>
 </div>
 
