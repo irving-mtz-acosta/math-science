@@ -68,13 +68,14 @@ $btn-code-copy-color-active: $orange !default;
 }
 i.arrow-down{
   color: #ff0000;
-  font-size: 6rem;
+  font-size: 3rem;
   width:  0.5em;
   height:  0.7em;
   display:  inline-block;
   position:  relative;
   background:  currentColor;
   vertical-align: top;
+  align-items: center;
 } i.arrow-down:after{
   border-right:  0.5em solid transparent;
   border-left:  0.5em solid transparent;
