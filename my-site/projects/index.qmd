@@ -6,7 +6,10 @@ title: Projects
 
 <img src="Images/stent_mesh.png" style="height: 100%; width: 100%; object-fit: contain" onclick="window.open('https://www.aimsciences.org//article/doi/10.3934/acse.2024009', 'blank');"/>
 
-<i class="arrow-down"></i>
+<div class="arrow-container">
+  <i class="arrow-down"></i>
+</div>
+
 
 <a href="https://www.aimsciences.org//article/doi/10.3934/acse.2024009" target="_blank">Paper (ACSE 2024)</a> <br>
 

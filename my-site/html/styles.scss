@@ -60,8 +60,15 @@ $btn-code-copy-color-active: $orange !default;
 
 
 /*-- scss:rules --*/
+.arrow-container {
+  display: flex;
+  justify-content: center; /* horizontal */
+  align-items: center;     /* vertical */
+  height: 100vh;           /* full viewport height */
+}
 i.arrow-down{
   color: #ff0000;
+  font-size: 6rem;
   width:  0.5em;
   height:  0.7em;
   display:  inline-block;
