@@ -34,7 +34,7 @@ website:
     # your sub-pages
     left:
       - text: "Projects"
-        #href: projects/index.qmd
+        href: projects/index.qmd
       - text: "Mathematics"
         #href: mathematics/index.qmd
       - text: "Interests"
