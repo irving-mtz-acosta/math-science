@@ -2,12 +2,20 @@
 title: Projects
 ---
 
-## Multi-domain modeling and simulation of blood solutes and elution in stented arteries
+## Modeling and simulation of coronary stents (2023)
 
 <img src="Images/stent_mesh.png" style="height: 100%; width: 100%; object-fit: contain" onclick="window.open('https://www.aimsciences.org//article/doi/10.3934/acse.2024009', 'blank');"/>
 
 
-<div class="arrow-center">
+<div class="arrow-center" style ="color:#ff9999">
+  <i class="arrow-down"></i>
+</div>
+
+<div class="arrow-center" style ="color:#ff4d4d">
+  <i class="arrow-down"></i>
+</div>
+
+<div class="arrow-center" style ="color:#ff0000">
   <i class="arrow-down"></i>
 </div>
 
