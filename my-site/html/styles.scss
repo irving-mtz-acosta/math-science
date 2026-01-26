@@ -60,6 +60,24 @@ $btn-code-copy-color-active: $orange !default;
 
 
 /*-- scss:rules --*/
+i.arrow-down{
+  color: #ff0000;
+  width:  0.5em;
+  height:  0.7em;
+  display:  inline-block;
+  position:  relative;
+  background:  currentColor;
+  vertical-align: top;
+} i.arrow-down:after{
+  border-right:  0.5em solid transparent;
+  border-left:  0.5em solid transparent;
+  border-top:  0.4em solid currentColor;
+  position:  absolute;
+  content:  "";
+  bottom:  -0.3em;
+  left:  -0.22em;
+}
+
 
 
 .nav-footer {
