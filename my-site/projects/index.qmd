@@ -11,13 +11,20 @@ title: Projects
   <i class="arrow-down"></i>
 </div>
 
+<img src="Images/mesh_simulation.png" style="height: 100%; width: 100%; object-fit: contain" onclick="window.open('https://www.aimsciences.org//article/doi/10.3934/acse.2024009', 'blank');"/>
+
 <div class="arrow-center" style ="color:#f05f6b">
   <i class="arrow-down"></i>
 </div>
 
+<img src="Images/real_stent.png" style="height: 100%; width: 100%; object-fit: contain" onclick="window.open('https://www.aimsciences.org//article/doi/10.3934/acse.2024009', 'blank');"/>
+
+
 <div class="arrow-center" style ="color:#ff0000">
   <i class="arrow-down"></i>
 </div>
+
+<img src="Images/real_stent_simulation.png" style="height: 100%; width: 100%; object-fit: contain" onclick="window.open('https://www.aimsciences.org//article/doi/10.3934/acse.2024009', 'blank');"/>
 
 <a href="https://www.aimsciences.org//article/doi/10.3934/acse.2024009" target="_blank">Paper (ACSE 2024)</a> <br>
 
