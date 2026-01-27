@@ -14,11 +14,11 @@ Digitally recreated foam from experiments.
 Constructed meshing reassignment algorithms to approximate complex porous regions and geometries. Achieved the following computational feats:
 
 
-### Approximated geometries from same initial STL file
+<li>### Approximated geometries from same initial STL file
 <img src="Images/sphere_approximation.png" style="height: 100%; width: 100%; object-fit: contain"/>
+</li>
 
-<li>
-### Established computational validation and simulation equivalence between actual geometries and their counterpart mesh approximations.
+<li>### Established computational validation and simulation equivalence between actual geometries and their counterpart mesh approximations.
 <img src="Images/sphere_benchmark equivalence.png" style="height: 100%; width: 100%; object-fit: contain"/>
  </li>
 

@@ -39,21 +39,28 @@
     "href": "projects/index.html",
     "title": "Projects",
     "section": "",
-    "text": "In this project, we developed multi-domain modeling of coronary stents taking into account the full interplay among the wall, lumen, and struts through fluid-structure interactions. \n\n\n\n\n\n\n\n\n\n\n\n\nPaper (ACSE 2024) \nStent Modeling"
+    "text": "Worked on developing feasible algorithms for numerical simulations of micromaterials with embedded nanopores in three-dimensional space without sacrificing time and spatial performance. We accomplished this through existing meshing strategies consisting of adaptive refinement and coarsening, our mesh approximation algorithm, and bounding volume hierarchy (BVH) algorithms. \nDigitally recreated foam from experiments."
+  },
+  {
+    "objectID": "projects/index.html#nanopore-embedding-in-microscale-simulations-2025",
+    "href": "projects/index.html#nanopore-embedding-in-microscale-simulations-2025",
+    "title": "Projects",
+    "section": "",
+    "text": "Worked on developing feasible algorithms for numerical simulations of micromaterials with embedded nanopores in three-dimensional space without sacrificing time and spatial performance. We accomplished this through existing meshing strategies consisting of adaptive refinement and coarsening, our mesh approximation algorithm, and bounding volume hierarchy (BVH) algorithms. \nDigitally recreated foam from experiments."
+  },
+  {
+    "objectID": "projects/index.html#geometrical-approximation-of-meshes-2025",
+    "href": "projects/index.html#geometrical-approximation-of-meshes-2025",
+    "title": "Projects",
+    "section": "Geometrical approximation of meshes (2025)",
+    "text": "Geometrical approximation of meshes (2025)\nConstructed meshing reassignment algorithms to approximate complex porous regions and geometries. Achieved the following computational feats:\n\nApproximated geometries from same initial STL file\n\n\n\n\nEstablished computational validation and simulation equivalence between actual geometries and their counterpart mesh approximations."
   },
   {
     "objectID": "projects/index.html#modeling-and-simulation-of-coronary-stents-2023",
     "href": "projects/index.html#modeling-and-simulation-of-coronary-stents-2023",
     "title": "Projects",
-    "section": "",
-    "text": "In this project, we developed multi-domain modeling of coronary stents taking into account the full interplay among the wall, lumen, and struts through fluid-structure interactions. \n\n\n\n\n\n\n\n\n\n\n\n\nPaper (ACSE 2024) \nStent Modeling"
-  },
-  {
-    "objectID": "projects/index.html#nanopore-embedding",
-    "href": "projects/index.html#nanopore-embedding",
-    "title": "Projects",
-    "section": "Nanopore embedding",
-    "text": "Nanopore embedding"
+    "section": "Modeling and simulation of coronary stents (2023)",
+    "text": "Modeling and simulation of coronary stents (2023)\nIn this project, we developed multi-domain modeling of coronary stents taking into account the full interplay among the wall, lumen, and struts through fluid-structure interactions. \n\n\n\n\n\n\n\n\n\n\n\n\nPaper (ACSE 2024) \nStent Modeling"
   },
   {
     "objectID": "index.html",
