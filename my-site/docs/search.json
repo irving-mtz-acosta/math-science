@@ -53,7 +53,7 @@
     "href": "projects/index.html#geometrical-approximation-of-meshes-2025",
     "title": "Projects",
     "section": "Geometrical approximation of meshes (2025)",
-    "text": "Geometrical approximation of meshes (2025)\nConstructed meshing reassignment algorithms to approximate complex porous regions and geometries. Achieved the following computational feats:\n\nApproximated geometries from same initial STL file\n\n\n\n\nEstablished computational validation and simulation equivalence between actual geometries and their counterpart mesh approximations."
+    "text": "Geometrical approximation of meshes (2025)\nConstructed meshing reassignment algorithms to approximate complex porous regions and geometries. Achieved the following computational feats:\n\n\nApproximated geometries from same initial STL file"
   },
   {
     "objectID": "projects/index.html#modeling-and-simulation-of-coronary-stents-2023",
