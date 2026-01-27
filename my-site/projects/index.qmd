@@ -1,6 +1,28 @@
 ---
 title: Projects
 ---
+## Nanopore embedding in microscale simulations (2025)
+Worked on developing feasible algorithms for numerical simulations of micromaterials with embedded nanopores in three-dimensional space without sacrificing time and spatial performance. 
+We accomplished this through existing meshing strategies consisting of adaptive refinement and coarsening, our mesh approximation algorithm, and bounding volume hierarchy (BVH) algorithms. 
+<img src="Images/nanopore_full.png" style="height: 100%; width: 100%; object-fit: contain"/>
+
+Digitally recreated foam from experiments. 
+<img src="Images/foam_nano.png" style="height: 100%; width: 100%; object-fit: contain"/>
+
+
+## Geometrical approximation of meshes (2025)
+Constructed meshing reassignment algorithms to approximate complex porous regions and geometries. Achieved the following computational feats:
+
+
+### Approximated geometries from same initial STL file
+<img src="Images/sphere_approximation.png" style="height: 100%; width: 100%; object-fit: contain"/>
+
+<li>
+### Established computational validation and simulation equivalence between actual geometries and their counterpart mesh approximations.
+<img src="Images/sphere_benchmark equivalence.png" style="height: 100%; width: 100%; object-fit: contain"/>
+ </li>
+
+
 
 ## Modeling and simulation of coronary stents (2023)
 In this project, we developed multi-domain modeling of coronary stents taking into account the full interplay among the wall, lumen, and struts through fluid-structure interactions. 
@@ -32,7 +54,6 @@ Stent Modeling
 
 ----
 
-## Nanopore embedding
 
 
 
