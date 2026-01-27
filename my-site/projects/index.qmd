@@ -24,8 +24,19 @@ Constructed meshing reassignment algorithms to approximate complex porous region
 <img src="Images/sphere_benchmark_equivalence.png" style="height: 100%; width: 100%; object-fit: contain"/>
 
 ### Beat benchmark simulation running time (219 seconds versus 18050 seconds) and RAM usage (24 GB versus 318 GB)
-<img src="Images/running_time_sphere.png" style="height: 100%; width: 50%; object-fit: contain"/> <img src="Images/RAM_sphere.png" style="height: 100%; width: 50%; object-fit: contain"/>
+<img src="Images/running_time_sphere.png" style="height: 100%; width: 100%; object-fit: contain"/> 
+<img src="Images/RAM_sphere.png" style="height: 100%; width: 100%; object-fit: contain"/>
 
+
+## Pore-detection Algorithms (2024)
+Developed pore-detection algorithms that prove superior against watershed methods. Obtained the following results:
+
+### More precise pore-centers, especially by eliminating instances of pore intersections
+Pore center estimates of radius 50 pixels after using our pore intersection method (left) versus watershed (right).
+<img src="Images/pore_detection_many.png" style="height: 100%; width: 100%; object-fit: contain"/> 
+
+### Bridged non-visible pore borders. 
+<img src="Images/pore_border.png" style="height: 100%; width: 100%; object-fit: contain"/> 
 
 
 ## Modeling and simulation of coronary stents (2023)
