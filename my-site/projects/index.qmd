@@ -18,9 +18,9 @@ Constructed meshing reassignment algorithms to approximate complex porous region
 <img src="Images/sphere_approximation.png" style="height: 100%; width: 100%; object-fit: contain"/>
 </li>
 
-<li>### Established computational validation and simulation equivalence between actual geometries and their counterpart mesh approximations.
+### Established computational validation and simulation equivalence between actual geometries and their counterpart mesh approximations.
 <img src="Images/sphere_benchmark equivalence.png" style="height: 100%; width: 100%; object-fit: contain"/>
- </li>
+
 
 
 
