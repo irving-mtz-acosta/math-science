@@ -1,3 +1,22 @@
+#project:
+#  type: website
+
+#website:
+#  title: "Irving Martinez"
+#  site-url: https://irving-mtz-acosta.github.io/math-science/
+#  navbar:
+#    left:
+#      - href: index.qmd
+#        text: Home
+#      - about.qmd
+
+#format:
+#  html:
+#    theme:
+#      - cosmo
+#      - brand
+#    css: styles.scss
+#    toc: true
 
 # website settings
 website:
@@ -5,12 +24,12 @@ website:
   #description: "Gandalf is a renowned wizard and scholar of Middle-earth"   # A brief slogan (optional)
   #image: Images/cph_me.jpg
   
-  #favicon: img/favicon.png
+  favicon: Images/logo.png
   
   # start of the navigation bar at the top of the website
   navbar:
     pinned: true
-    logo: /Images/logo.png
+    #logo: /img/logo.png
     
     # your sub-pages
     left:
