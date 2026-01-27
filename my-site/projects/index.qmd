@@ -18,10 +18,10 @@ Constructed meshing reassignment algorithms to approximate complex porous region
 <img src="Images/sphere_approximation.png" style="height: 100%; width: 100%; object-fit: contain"/>
 
 ### Built systems architecture to automatically generate and run more than 850 simulations through clusters via HPC and cross-coding among Python, MATLAB, and COMSOL.
-<img src="Images/architecture1.png" style="height: 100%; width: 100%; object-fit: contain"/>
+<img src="Images/architecture.png" style="height: 100%; width: 100%; object-fit: contain"/>
 
 ### Established computational validation and simulation equivalence between actual geometries and their counterpart mesh approximations.
-<img src="Images/sphere_benchmark_equivalence1.png" style="height: 100%; width: 100%; object-fit: contain"/>
+<img src="Images/sphere_benchmark_equivalence.png" style="height: 100%; width: 100%; object-fit: contain"/>
 
 ### Beat benchmark simulation running time (219 seconds versus 18050 seconds) and RAM usage (24 GB versus 318 GB)
 <img src="Images/running_time_sphere.png" style="height: 100%; width: 100%; object-fit: contain"/> 
