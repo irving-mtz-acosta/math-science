@@ -56,6 +56,13 @@
     "text": "Geometrical approximation of meshes (2025)\nConstructed meshing reassignment algorithms to approximate complex porous regions and geometries. Achieved the following computational feats:\n\nApproximated geometries from without changing initial STL file\n\n\n\nBuilt systems architecture to automatically generate and run more than 850 simulations through clusters via HPC and cross-coding among Python, MATLAB, and COMSOL.\n\n\n\nEstablished computational validation and simulation equivalence between actual geometries and their counterpart mesh approximations.\n\n\n\nBeat benchmark simulation running time (219 seconds versus 18050 seconds) and RAM usage (24 GB versus 318 GB)"
   },
   {
+    "objectID": "projects/index.html#pore-detection-algorithms-2024",
+    "href": "projects/index.html#pore-detection-algorithms-2024",
+    "title": "Projects",
+    "section": "Pore-detection Algorithms (2024)",
+    "text": "Pore-detection Algorithms (2024)\nDeveloped pore-detection algorithms that prove superior against watershed methods. Obtained the following results:\n\nMore precise pore-centers, especially by eliminating instances of pore intersections\nPore center estimates of radius 50 pixels after using our pore intersection method (left) versus watershed (right). \n\n\nBridged non-visible pore borders."
+  },
+  {
     "objectID": "projects/index.html#modeling-and-simulation-of-coronary-stents-2023",
     "href": "projects/index.html#modeling-and-simulation-of-coronary-stents-2023",
     "title": "Projects",

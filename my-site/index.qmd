@@ -5,8 +5,9 @@ about:
   id: about-block
   image: "Images/board_me.JPG"
   links:
-    - icon: github
-      text: Github
+   <!-- #- icon: github
+    #  text: Github
+  -->
     - icon: linkedin
       text: LinkedIn
     - icon: envelope
