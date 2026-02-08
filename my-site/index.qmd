@@ -10,6 +10,7 @@ about:
   -->
     - icon: linkedin
       text: LinkedIn
+      link-external-newwindow: true
       href: "https://www.linkedin.com/in/irving-martinez-331bb447/"
     - icon: envelope
       text: Email
