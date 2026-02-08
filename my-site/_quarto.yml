@@ -48,6 +48,7 @@ website:
         #href: https://www.marvinschmitt.com/blog/website-tutorial-quarto/
       - icon: linkedin
         href: https://www.linkedin.com/in/irving-martinez-331bb447/
+        target: "_blank"
       - icon: envelope
         aria-label: email
         href: "mailto:irving915656@gmail.com"  
