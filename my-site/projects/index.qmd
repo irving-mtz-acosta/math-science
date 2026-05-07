@@ -1,7 +1,7 @@
 ---
 title: Projects
 ---
-## Open-source automated meshing and simulation of patient-specific stented coronary arteries via(Current)
+## Open-source automated meshing and simulation of patient-specific stented coronary arteries (Current)
 
 
 
