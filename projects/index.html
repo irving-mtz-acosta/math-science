@@ -144,71 +144,62 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="open-source-automated-meshing-and-simulation-of-patient-specific-stented-coronary-arteries-current" class="level2">
 <h2 class="anchored" data-anchor-id="open-source-automated-meshing-and-simulation-of-patient-specific-stented-coronary-arteries-current">Open-source automated meshing and simulation of patient-specific stented coronary arteries (Current)</h2>
-<p>Usage of</p>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 5%">
-</colgroup>
-<tbody>
-<tr class="odd">
-<td>## Nanopore embedding in microscale simulations (2025) Worked on developing feasible algorithms for numerical simulations of micromaterials with embedded nanopores in three-dimensional space without sacrificing time and spatial performance. We accomplished this through existing meshing strategies consisting of adaptive refinement and coarsening, our mesh approximation algorithm, and bounding volume hierarchy (BVH) algorithms. <img src="Images/nanopore_full.png" style="height: 100%; width: 100%; object-fit: contain"></td>
-</tr>
-<tr class="even">
-<td>Digitally recreated foam from experiments. <img src="Images/foam_nano.png" style="height: 100%; width: 100%; object-fit: contain"></td>
-</tr>
-<tr class="odd">
-<td>## Geometrical approximation of meshes (2025) Constructed meshing reassignment algorithms to approximate complex porous regions and geometries. Achieved the following computational feats:</td>
-</tr>
-<tr class="even">
-<td>### Approximated geometries from without changing initial STL file <img src="Images/sphere_approximation.png" style="height: 100%; width: 100%; object-fit: contain"></td>
-</tr>
-<tr class="odd">
-<td>### Built systems architecture to automatically generate and run more than 850 simulations through clusters via HPC and cross-coding among Python, MATLAB, and COMSOL. <img src="Images/architecture.png" style="height: 100%; width: 100%; object-fit: contain"></td>
-</tr>
-<tr class="even">
-<td>### Established computational validation and simulation equivalence between actual geometries and their counterpart mesh approximations. <img src="Images/sphere_benchmark_equivalence.png" style="height: 100%; width: 100%; object-fit: contain"></td>
-</tr>
-<tr class="odd">
-<td>### Beat benchmark simulation running time (219 seconds versus 18050 seconds) and RAM usage (24 GB versus 318 GB) <img src="Images/running_time_sphere.png" style="height: 100%; width: 100%; object-fit: contain"> <img src="Images/RAM_sphere.png" style="height: 100%; width: 100%; object-fit: contain"></td>
-</tr>
-<tr class="even">
-<td>## Pore-detection Algorithms (2024) Developed pore-detection algorithms that prove superior against watershed methods. Obtained the following results:</td>
-</tr>
-<tr class="odd">
-<td>### More precise pore-centers, especially by eliminating instances of pore intersections Pore center estimates of radius 50 pixels after using our pore intersection method (left) versus watershed (right). <img src="Images/pore_detection_many.png" style="height: 100%; width: 100%; object-fit: contain"></td>
-</tr>
-<tr class="even">
-<td>### Bridged non-visible pore borders. <img src="Images/pore_border.png" style="height: 100%; width: 100%; object-fit: contain"></td>
-</tr>
-<tr class="odd">
-<td>## Modeling and simulation of coronary stents (2023) In this project, we developed multi-domain modeling of coronary stents taking into account the full interplay among the wall, lumen, and struts through fluid-structure interactions. <img src="Images/stent_mesh.png" style="height: 100%; width: 100%; object-fit: contain" onclick="window.open('https://www.aimsciences.org//article/doi/10.3934/acse.2024009', 'blank');"></td>
-</tr>
-<tr class="even">
-<td></td>
-</tr>
-<tr class="odd">
-<td><img src="Images/mesh_simulation.png" style="height: 100%; width: 100%; object-fit: contain" onclick="window.open('https://www.aimsciences.org//article/doi/10.3934/acse.2024009', 'blank');"></td>
-</tr>
-<tr class="even">
-<td></td>
-</tr>
-<tr class="odd">
-<td><img src="Images/real_stent.png" style="height: 100%; width: 100%; object-fit: contain" onclick="window.open('https://www.aimsciences.org//article/doi/10.3934/acse.2024009', 'blank');"></td>
-</tr>
-<tr class="even">
-<td></td>
-</tr>
-<tr class="odd">
-<td><img src="Images/real_stent_simulation.png" style="height: 100%; width: 100%; object-fit: contain" onclick="window.open('https://www.aimsciences.org//article/doi/10.3934/acse.2024009', 'blank');"></td>
-</tr>
-<tr class="even">
-<td><a href="https://www.aimsciences.org//article/doi/10.3934/acse.2024009" target="_blank">Paper (ACSE 2024)</a> <br></td>
-</tr>
-<tr class="odd">
-<td>Stent Modeling</td>
-</tr>
-</tbody>
-</table>
+</section>
+<section id="nanopore-embedding-in-microscale-simulations-2025" class="level2">
+<h2 class="anchored" data-anchor-id="nanopore-embedding-in-microscale-simulations-2025">Nanopore embedding in microscale simulations (2025)</h2>
+<p>Worked on developing feasible algorithms for numerical simulations of micromaterials with embedded nanopores in three-dimensional space without sacrificing time and spatial performance. We accomplished this through existing meshing strategies consisting of adaptive refinement and coarsening, our mesh approximation algorithm, and bounding volume hierarchy (BVH) algorithms. <img src="Images/nanopore_full.png" style="height: 100%; width: 100%; object-fit: contain"></p>
+<p>Digitally recreated foam from experiments. <img src="Images/foam_nano.png" style="height: 100%; width: 100%; object-fit: contain"></p>
+</section>
+<section id="geometrical-approximation-of-meshes-2025" class="level2">
+<h2 class="anchored" data-anchor-id="geometrical-approximation-of-meshes-2025">Geometrical approximation of meshes (2025)</h2>
+<p>Constructed meshing reassignment algorithms to approximate complex porous regions and geometries. Achieved the following computational feats:</p>
+<section id="approximated-geometries-from-without-changing-initial-stl-file" class="level3">
+<h3 class="anchored" data-anchor-id="approximated-geometries-from-without-changing-initial-stl-file">Approximated geometries from without changing initial STL file</h3>
+<p><img src="Images/sphere_approximation.png" style="height: 100%; width: 100%; object-fit: contain"></p>
+</section>
+<section id="built-systems-architecture-to-automatically-generate-and-run-more-than-850-simulations-through-clusters-via-hpc-and-cross-coding-among-python-matlab-and-comsol." class="level3">
+<h3 class="anchored" data-anchor-id="built-systems-architecture-to-automatically-generate-and-run-more-than-850-simulations-through-clusters-via-hpc-and-cross-coding-among-python-matlab-and-comsol.">Built systems architecture to automatically generate and run more than 850 simulations through clusters via HPC and cross-coding among Python, MATLAB, and COMSOL.</h3>
+<p><img src="Images/architecture.png" style="height: 100%; width: 100%; object-fit: contain"></p>
+</section>
+<section id="established-computational-validation-and-simulation-equivalence-between-actual-geometries-and-their-counterpart-mesh-approximations." class="level3">
+<h3 class="anchored" data-anchor-id="established-computational-validation-and-simulation-equivalence-between-actual-geometries-and-their-counterpart-mesh-approximations.">Established computational validation and simulation equivalence between actual geometries and their counterpart mesh approximations.</h3>
+<p><img src="Images/sphere_benchmark_equivalence.png" style="height: 100%; width: 100%; object-fit: contain"></p>
+</section>
+<section id="beat-benchmark-simulation-running-time-219-seconds-versus-18050-seconds-and-ram-usage-24-gb-versus-318-gb" class="level3">
+<h3 class="anchored" data-anchor-id="beat-benchmark-simulation-running-time-219-seconds-versus-18050-seconds-and-ram-usage-24-gb-versus-318-gb">Beat benchmark simulation running time (219 seconds versus 18050 seconds) and RAM usage (24 GB versus 318 GB)</h3>
+<p><img src="Images/running_time_sphere.png" style="height: 100%; width: 100%; object-fit: contain"> <img src="Images/RAM_sphere.png" style="height: 100%; width: 100%; object-fit: contain"></p>
+</section>
+</section>
+<section id="pore-detection-algorithms-2024" class="level2">
+<h2 class="anchored" data-anchor-id="pore-detection-algorithms-2024">Pore-detection Algorithms (2024)</h2>
+<p>Developed pore-detection algorithms that prove superior against watershed methods. Obtained the following results:</p>
+<section id="more-precise-pore-centers-especially-by-eliminating-instances-of-pore-intersections" class="level3">
+<h3 class="anchored" data-anchor-id="more-precise-pore-centers-especially-by-eliminating-instances-of-pore-intersections">More precise pore-centers, especially by eliminating instances of pore intersections</h3>
+<p>Pore center estimates of radius 50 pixels after using our pore intersection method (left) versus watershed (right). <img src="Images/pore_detection_many.png" style="height: 100%; width: 100%; object-fit: contain"></p>
+</section>
+<section id="bridged-non-visible-pore-borders." class="level3">
+<h3 class="anchored" data-anchor-id="bridged-non-visible-pore-borders.">Bridged non-visible pore borders.</h3>
+<p><img src="Images/pore_border.png" style="height: 100%; width: 100%; object-fit: contain"></p>
+</section>
+</section>
+<section id="modeling-and-simulation-of-coronary-stents-2023" class="level2">
+<h2 class="anchored" data-anchor-id="modeling-and-simulation-of-coronary-stents-2023">Modeling and simulation of coronary stents (2023)</h2>
+<p>In this project, we developed multi-domain modeling of coronary stents taking into account the full interplay among the wall, lumen, and struts through fluid-structure interactions. <img src="Images/stent_mesh.png" style="height: 100%; width: 100%; object-fit: contain" onclick="window.open('https://www.aimsciences.org//article/doi/10.3934/acse.2024009', 'blank');"></p>
+<div class="arrow-center" style="color:#ff9999">
+<p><i class="arrow-down"></i></p>
+</div>
+<p><img src="Images/mesh_simulation.png" style="height: 100%; width: 100%; object-fit: contain" onclick="window.open('https://www.aimsciences.org//article/doi/10.3934/acse.2024009', 'blank');"></p>
+<div class="arrow-center" style="color:#f05f6b">
+<p><i class="arrow-down"></i></p>
+</div>
+<p><img src="Images/real_stent.png" style="height: 100%; width: 100%; object-fit: contain" onclick="window.open('https://www.aimsciences.org//article/doi/10.3934/acse.2024009', 'blank');"></p>
+<div class="arrow-center" style="color:#ff0000">
+<p><i class="arrow-down"></i></p>
+</div>
+<p><img src="Images/real_stent_simulation.png" style="height: 100%; width: 100%; object-fit: contain" onclick="window.open('https://www.aimsciences.org//article/doi/10.3934/acse.2024009', 'blank');"></p>
+<p><a href="https://www.aimsciences.org//article/doi/10.3934/acse.2024009" target="_blank">Paper (ACSE 2024)</a> <br></p>
+<p>Stent Modeling</p>
+<hr>
 
 
 </section>
