@@ -2,10 +2,8 @@
 title: Projects
 ---
 ## Open-source automated meshing and simulation of patient-specific stented coronary arteries (Current)
-Usage of
 
 
----
 ## Nanopore embedding in microscale simulations (2025)
 Worked on developing feasible algorithms for numerical simulations of micromaterials with embedded nanopores in three-dimensional space without sacrificing time and spatial performance. 
 We accomplished this through existing meshing strategies consisting of adaptive refinement and coarsening, our mesh approximation algorithm, and bounding volume hierarchy (BVH) algorithms. 
