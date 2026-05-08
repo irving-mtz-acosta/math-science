@@ -16,9 +16,9 @@ Developed the following methodology **automatically** on a bifurcated carotid ar
 <img src="Images/bctagging.png" style="height: 100%; width: 100%; object-fit: contain"/>
 
 ### 4. Generation of stent sub-mesh and smoothing
-<img src="Images/stent_smooth_cross.png" style="height: 100%; width: 100%; object-fit: contain"/>
+<img src="Images/stent_smooth_cross_1.png" style="height: 100%; width: 100%; object-fit: contain"/>
 
-<img src="Images/stent_smooth_side.png" style="height: 100%; width: 100%; object-fit: contain"/>
+<img src="Images/stent_smooth_side_1.png" style="height: 100%; width: 100%; object-fit: contain"/>
 
 ### 5. Domain decomposition and integration (Lumen and Stent).
 <img src="Images/domain_decomposition.png" style="height: 100%; width: 100%; object-fit: contain"/>
