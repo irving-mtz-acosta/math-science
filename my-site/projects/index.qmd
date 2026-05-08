@@ -2,7 +2,7 @@
 title: Projects
 ---
 ## Open-source automated meshing and simulation of patient-specific stented coronary arteries (Current)
-Developed a pipeline for automated meshing and simulation of stented coronary arteries. This methodology has been applied to several patient-specific cases. Due to copyright of patient data, the demonstration of this pipeline is constrained to synthetic STL geometries that closely resemble real patient-specific geometries. 
+Developed a pipeline for automated meshing and simulation of stented coronary arteries. This methodology has been applied to several patient-specific cases. Due to copyright of patient data, the demonstration of this pipeline is constrained to synthetic STL geometries that closely resemble real patient-specific geometries. This was done with all *open-source software on a low-end Mac Mini M4* with 16 GB RAM, 10 CPU cores, 10 GPU cores ($500 dollar price-tag).
 
 Developed the following methodology **automatically**: 
 
