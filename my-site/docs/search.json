@@ -39,14 +39,14 @@
     "href": "projects/index.html",
     "title": "Projects",
     "section": "",
-    "text": "Developed a pipeline for automated meshing and simulation of stented coronary arteries. This methodology has been applied to several patient-specific cases. Due to copyright of patient data, the demonstration of this pipeline is constrained to synthetic STL geometries that closely resemble real patient-specific geometries. Developed the following methodology automatically: ### 1. Generation of synthetic STL geometries in the form of bifurcated coronary arteries (e.g. carotid artery) and stent that closely resemble real patient-specific stented geometries using Python libraries. \n\nMeshing of STL using VMTK"
+    "text": "Developed a pipeline for automated meshing and simulation of stented coronary arteries. This methodology has been applied to several patient-specific cases. Due to copyright of patient data, the demonstration of this pipeline is constrained to synthetic STL geometries that closely resemble real patient-specific geometries. \\ Developed the following methodology automatically: \\ ### 1. Generation of synthetic STL geometries in the form of bifurcated coronary arteries (e.g. carotid artery) and stent that closely resemble real patient-specific stented geometries using Python libraries."
   },
   {
     "objectID": "projects/index.html#open-source-automated-meshing-and-simulation-of-patient-specific-stented-coronary-arteries-current",
     "href": "projects/index.html#open-source-automated-meshing-and-simulation-of-patient-specific-stented-coronary-arteries-current",
     "title": "Projects",
     "section": "",
-    "text": "Developed a pipeline for automated meshing and simulation of stented coronary arteries. This methodology has been applied to several patient-specific cases. Due to copyright of patient data, the demonstration of this pipeline is constrained to synthetic STL geometries that closely resemble real patient-specific geometries. Developed the following methodology automatically: ### 1. Generation of synthetic STL geometries in the form of bifurcated coronary arteries (e.g. carotid artery) and stent that closely resemble real patient-specific stented geometries using Python libraries. \n\nMeshing of STL using VMTK"
+    "text": "Developed a pipeline for automated meshing and simulation of stented coronary arteries. This methodology has been applied to several patient-specific cases. Due to copyright of patient data, the demonstration of this pipeline is constrained to synthetic STL geometries that closely resemble real patient-specific geometries. \\ Developed the following methodology automatically: \\ ### 1. Generation of synthetic STL geometries in the form of bifurcated coronary arteries (e.g. carotid artery) and stent that closely resemble real patient-specific stented geometries using Python libraries."
   },
   {
     "objectID": "projects/index.html#nanopore-embedding-in-microscale-simulations-2025",
