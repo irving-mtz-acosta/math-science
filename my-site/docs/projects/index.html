@@ -41,8 +41,6 @@ ul.task-list li input[type="checkbox"] {
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../site_libs/bootstrap/bootstrap-98f6ec1340bcaa554734471ee2c531f5.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
-<script src="../site_libs/quarto-contrib/videojs/video.min.js"></script>
-<link href="../site_libs/quarto-contrib/videojs/video-js.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -148,7 +146,9 @@ ul.task-list li input[type="checkbox"] {
 <h2 class="anchored" data-anchor-id="open-source-automated-meshing-and-simulation-of-patient-specific-stented-coronary-arteriescurrent">Open-source automated meshing and simulation of patient-specific stented coronary arteries(Current)</h2>
 <p>Developed a pipeline for automated meshing and simulation of stented coronary arteries. This methodology has been applied to several patient-specific cases. Due to copyright of patient data, the demonstration of this pipeline is constrained to synthetic STL geometries that closely resemble real patient-specific geometries. This was done with all <em>open-source software on a low-end Mac Mini M4</em> with 16 GB RAM, 10 CPU cores, 10 GPU cores ($500 dollar price-tag). Complete meshing setup, tagging, smoothing, and domain decomposition was done without human intervention in under 3 minutes. All visualization presented here was done with ParaView, an open-source visualization software.</p>
 <p>Here is a working demo:</p>
-<p><code>markdown     ::: {#fig-demo}          Demo of automated meshing from stl files.     :::</code></p>
+<video width="100%" height="auto" muted="">
+<source src="demo_stent.mp4" type="video/mp4">
+<p>Your browser does not support the video tag. </p>
 <p>Developed the following methodology <strong>automatically</strong> on a bifurcated carotid artery geometry with malapposed stent on the external carotid artery (ECA) branch:</p>
 <section id="generation-of-synthetic-stl-geometries-in-the-form-of-bifurcated-coronary-arteries-e.g.-carotid-artery-and-stent-that-closely-resemble-real-patient-specific-stented-geometries-using-python-libraries." class="level3">
 <h3 class="anchored" data-anchor-id="generation-of-synthetic-stl-geometries-in-the-form-of-bifurcated-coronary-arteries-e.g.-carotid-artery-and-stent-that-closely-resemble-real-patient-specific-stented-geometries-using-python-libraries.">1. Generation of synthetic STL geometries in the form of bifurcated coronary arteries (e.g.&nbsp;carotid artery) and stent that closely resemble real patient-specific stented geometries using Python libraries.</h3>
@@ -179,7 +179,7 @@ ul.task-list li input[type="checkbox"] {
 <h3 class="anchored" data-anchor-id="post-wall-shear-stress.">7. Post Wall-Shear Stress.</h3>
 <p><img src="Images/post_wss.png" style="height: 100%; width: 100%; object-fit: contain"></p>
 </section>
-</section>
+</video></section>
 <section id="nanopore-embedding-in-microscale-simulations-2025" class="level2">
 <h2 class="anchored" data-anchor-id="nanopore-embedding-in-microscale-simulations-2025">Nanopore embedding in microscale simulations (2025)</h2>
 <p>Worked on developing feasible algorithms for numerical simulations of micromaterials with embedded nanopores in three-dimensional space without sacrificing time and spatial performance. I accomplished this through existing meshing strategies consisting of adaptive refinement and coarsening, our mesh approximation algorithm, and bounding volume hierarchy (BVH) algorithms. <img src="Images/nanopore_full.png" style="height: 100%; width: 100%; object-fit: contain"></p>
@@ -654,7 +654,6 @@ ul.task-list li input[type="checkbox"] {
     </div>
   </div>
 </footer>
-<script>videojs(video_shortcode_videojs_video1);</script>
 
 
 
