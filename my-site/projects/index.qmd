@@ -6,7 +6,7 @@ Developed a pipeline for automated meshing and simulation of stented coronary ar
 
 Here is a working demo:
 
-<video  src="Images/demo_stent.mp4" type=video/mp4 width="100% height=auto />
+<video src="Images/demo_stent.mp4" type="video/mp4" width="100%" height="auto" controls></video>
 
 Developed the following methodology **automatically** on a bifurcated carotid artery geometry with malapposed stent on the external carotid artery (ECA) branch: 
 
