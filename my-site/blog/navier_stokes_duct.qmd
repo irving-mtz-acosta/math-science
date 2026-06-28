@@ -56,6 +56,51 @@ plt.title("Duct Geometry", color='white')
 plt.show()
 ```
 
+
+```{python}
+import numpy as np
+import matplotlib.pyplot as plt
+import matplotlib.patches as mpatches
+from matplotlib.collections import LineCollection
+import plotly.graph_objects as go
+import plotly.express as px
+from plotly.subplots import make_subplots
+
+# ── Geometry ──────────────────────────────────────────────────────────────────
+def duct_half_height(x, h_in=0.36, h_throat=0.14, angle_deg=8.0):
+    """Half-height h(x) for x in [0,1]."""
+    x_contract_end = 0.35
+    x_throat_end   = 0.45
+    alpha = np.tan(np.radians(angle_deg))
+    h = np.empty_like(np.atleast_1d(x), dtype=float)
+    for i, xi in enumerate(np.atleast_1d(x)):
+        if xi < x_contract_end:
+            s = xi / x_contract_end
+            h[i] = h_in + (h_throat - h_in) * 0.5 * (1 - np.cos(np.pi * s))
+        elif xi < x_throat_end:
+            h[i] = h_throat
+        else:
+            h[i] = h_throat + alpha * (xi - x_throat_end)
+    return h if h.ndim > 0 else h[0]
+
+x_arr = np.linspace(0, 1, 400)
+h_arr = duct_half_height(x_arr)
+
+fig, ax = plt.subplots(figsize=(10, 3))
+ax.fill_between(x_arr, h_arr, 0.5, color='#1a2a3a', alpha=0.9)
+ax.fill_between(x_arr, -h_arr, -0.5, color='#1a2a3a', alpha=0.9)
+ax.plot(x_arr,  h_arr, 'steelblue', lw=2)
+ax.plot(x_arr, -h_arr, 'steelblue', lw=2)
+for xt, lbl in [(0.17,'Contraction'),(0.40,'Throat'),(0.72,'Diffuser')]:
+    ax.text(xt, -0.48, lbl, ha='center', fontsize=9, color='#8ab0d0', style='italic')
+ax.set_xlim(0,1); ax.set_ylim(-0.52,0.52)
+ax.set_facecolor('#0f1117'); fig.patch.set_facecolor('#0f1117')
+ax.tick_params(colors='gray'); ax.set_xlabel('x (normalized)', color='gray')
+ax.set_ylabel('y', color='gray')
+ax.set_title('Duct geometry: contraction → throat → diffuser', color='#c8d8f0')
+plt.tight_layout(); plt.show()
+```
+
 ---
 
 ## §2 Potential Flow and Bernoulli
