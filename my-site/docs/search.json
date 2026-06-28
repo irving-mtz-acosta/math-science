@@ -130,7 +130,7 @@
     "href": "blog/navier_stokes_duct.html#potential-flow-and-bernoulli",
     "title": "Flow Through a Contraction–Throat–Diffuser Duct",
     "section": "§2 Potential Flow and Bernoulli",
-    "text": "§2 Potential Flow and Bernoulli\nIn inviscid flow, the speed \\bar{U}(x) is inversely proportional to h(x). Bernoulli’s principle states p + \\frac{1}{2}\\rho U^2 = \\text{const}.\n\n\nCode\nQ = 0.08\nrho = 1.0\nU_bar = Q / (2 * h_arr)\np_arr = 1.0 + 0.5 * rho * (U_bar[0]**2 - U_bar**2)\n\nfig = go.Figure()\nfig.add_trace(go.Scatter(x=x_arr, y=U_bar, name='Velocity Ū'))\nfig.add_trace(go.Scatter(x=x_arr, y=p_arr, name='Pressure p'))\nfig.update_layout(template='plotly_dark', title=\"Quasi-1D Potential Flow\")\nfig.show()"
+    "text": "§2 Potential Flow and Bernoulli\nIn inviscid flow, the speed \\bar{U}(x) is inversely proportional to h(x). Bernoulli’s principle states \np + \\frac{1}{2}\\rho U^2 = \\text{const}.\n\n\n\nCode\nQ = 0.08\nrho = 1.0\nU_bar = Q / (2 * h_arr)\np_arr = 1.0 + 0.5 * rho * (U_bar[0]**2 - U_bar**2)\n\nfig = go.Figure()\nfig.add_trace(go.Scatter(x=x_arr, y=U_bar, name='Velocity Ū'))\nfig.add_trace(go.Scatter(x=x_arr, y=p_arr, name='Pressure p'))\nfig.update_layout(template='plotly_dark', title=\"Quasi-1D Potential Flow\")\nfig.show()"
   },
   {
     "objectID": "blog/navier_stokes_duct.html#the-navierstokes-equations",
