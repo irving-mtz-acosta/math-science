@@ -12,6 +12,8 @@ format:
     toc-depth: 3
     theme: darkly
     highlight-style: dracula
+    html-math-method: mathjax
+    embed-resources: true
 jupyter: python3
 ---
 
