@@ -60,7 +60,10 @@ plt.show()
 
 ## §2 Potential Flow and Bernoulli
 
-In inviscid flow, the speed $\bar{U}(x)$ is inversely proportional to $h(x)$. Bernoulli's principle states $p + \frac{1}{2}\rho U^2 = \text{const}$.
+In inviscid flow, the speed $\bar{U}(x)$ is inversely proportional to $h(x)$. Bernoulli's principle states 
+$$
+p + \frac{1}{2}\rho U^2 = \text{const}.
+$$
 
 ```{python}
 Q = 0.08
