@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Duct Flow: Potential & Viscous</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:Georgia,serif;background:#0f1117;color:#e8e8e8;padding:20px;}
+  h1{text-align:center;font-size:1.4em;color:#c8d8f0;margin-bottom:4px;letter-spacing:.04em;}
+  .subtitle{text-align:center;font-size:.82em;color:#7a9ab8;margin-bottom:18px;}
+  .tabs{display:flex;justify-content:center;gap:8px;margin-bottom:16px;}
+  .tab{padding:7px 22px;border-radius:20px;border:1.5px solid #334;cursor:pointer;font-size:.85em;background:#181c26;color:#8ab0d0;transition:all .2s;}
+  .tab.active{background:#1e3a5f;color:#c8e0ff;border-color:#4a7ab0;}
+  .controls{display:flex;flex-wrap:wrap;justify-content:center;gap:14px;margin-bottom:14px;align-items:center;}
+  .ctrl{display:flex;flex-direction:column;align-items:center;gap:3px;font-size:.75em;color:#8ab0c8;}
+  .ctrl select,.ctrl input[type=range]{background:#181c26;color:#c8e0ff;border:1px solid #334;border-radius:6px;padding:3px 7px;font-size:.82em;}
+  .ctrl input[type=range]{width:110px;accent-color:#4a7ab0;}
+  .btn{padding:6px 18px;border-radius:16px;border:1.5px solid #4a7ab0;background:#1e3a5f;color:#c8e0ff;cursor:pointer;font-size:.82em;transition:all .2s;}
+  .btn:hover{background:#2a4f7a;}
+  .btn.stop{border-color:#a04040;background:#3a1a1a;color:#f0a0a0;}
+  svg{display:block;margin:0 auto;}
+  .legend{display:flex;flex-wrap:wrap;justify-content:center;gap:14px;margin-top:10px;font-size:.75em;color:#8ab0c8;}
+  .leg-item{display:flex;align-items:center;gap:5px;}
+  .leg-swatch{width:22px;height:3px;border-radius:2px;}
+  .info-box{max-width:700px;margin:14px auto 0;background:#141820;border:1px solid #2a3a50;border-radius:10px;padding:14px 18px;font-size:.8em;line-height:1.7;color:#a8c0d8;}
+  .info-box b{color:#c8e0ff;}
+  .section-label{font-size:.7em;fill:#7a9ab8;font-style:italic;}
+  .frame-counter{text-align:center;font-size:.72em;color:#556;margin-top:4px;}
+</style>
+</head>
+<body>
+<h1>Flow Through a Contraction–Throat–Diffuser Duct</h1>
+<div class="subtitle">Potential Flow (inviscid)  |  Viscous Navier–Stokes (multiple fluids)</div>
+
+<div class="tabs">
+  <div class="tab active" id="tab-potential" onclick="switchTab('potential')">B · Potential Flow (Inviscid)</div>
+  <div class="tab" id="tab-viscous" onclick="switchTab('viscous')">C · Viscous N–S Flow</div>
+</div>
+
+<div class="controls" id="controls-potential">
+  <div class="ctrl"><span>Flow rate Q</span><input type="range" id="Q-pot" min="0.3" max="1.5" step="0.05" value="0.8"/><span id="Q-pot-val">0.80</span></div>
+  <div class="ctrl"><span>Throat width</span><input type="range" id="throat-pot" min="0.15" max="0.45" step="0.01" value="0.28"/><span id="throat-pot-val">0.28</span></div>
+  <div class="ctrl"><span>Diffuser angle</span><input type="range" id="angle-pot" min="3" max="20" step="1" value="8"/><span id="angle-pot-val">8°</span></div>
+  <button class="btn" id="play-pot" onclick="togglePlay('pot')">⏸ Pause</button>
+</div>
+
+<div class="controls" id="controls-viscous" style="display:none">
+  <div class="ctrl"><span>Fluid</span>
+    <select id="fluid-sel">
+      <option value="water">Water (μ=0.001)</option>
+      <option value="oil">Light Oil (μ=0.05)</option>
+      <option value="glycerin">Glycerin (μ=1.5)</option>
+      <option value="air">Air (μ=1.8e-5)</option>
+      <option value="honey">Honey (μ=10)</option>
+    </select>
+  </div>
+  <div class="ctrl"><span>Inlet velocity</span><input type="range" id="U-visc" min="0.1" max="2.0" step="0.05" value="0.5"/><span id="U-visc-val">0.50</span></div>
+  <div class="ctrl"><span>Diffuser angle</span><input type="range" id="angle-visc" min="3" max="25" step="1" value="10"/><span id="angle-visc-val">10°</span></div>
+  <button class="btn" id="play-visc" onclick="togglePlay('visc')">⏸ Pause</button>
+</div>
+
+<svg id="main-svg" width="700" height="380"></svg>
+<div class="frame-counter" id="frame-info">frame 0</div>
+
+<div class="legend" id="legend-potential">
+  <div class="leg-item"><div class="leg-swatch" style="background:#4a9eff"></div>Streamlines</div>
+  <div class="leg-item"><div class="leg-swatch" style="background:#ff9f40;height:8px;border-radius:3px"></div>Pressure (high→low: red→blue)</div>
+  <div class="leg-item"><div class="leg-swatch" style="background:#50e890"></div>Velocity magnitude</div>
+</div>
+<div class="legend" id="legend-viscous" style="display:none">
+  <div class="leg-item"><div class="leg-swatch" style="background:#4a9eff"></div>Streamlines</div>
+  <div class="leg-item"><div class="leg-swatch" style="background:#ff4040"></div>Separation / recirculation</div>
+  <div class="leg-item"><div class="leg-swatch" style="background:#ffd700"></div>Boundary layer</div>
+</div>
+
+<div class="info-box" id="info-box">
+  <b>Potential Flow (Inviscid, Irrotational)</b><br>
+  The velocity field is derived from a stream function ψ satisfying ∇²ψ = 0. 
+  In the <b>contraction</b>, streamlines converge → speed increases → pressure drops (Bernoulli). 
+  At the <b>throat</b>, speed is maximum and static pressure is minimum. 
+  In the <b>diffuser</b>, streamlines diverge → speed decreases → pressure recovers. 
+  Particles are animated as passive tracers advected by the velocity field.
+</div>
+
+<script>
+const W=700,H=380,PAD=40;
+const XL=PAD,XR=W-PAD,YT=50,YB=H-60;
+const DH=YB-YT; // total draw height
+
+// ---- Geometry helpers ----
+function ductGeometry(Q,throatW,angleDeg){
+  // x in [0,1], returns {top,bot} in pixel coords
+  const L=XR-XL;
+  const inH=0.72, throatH=throatW, outH=Math.min(0.95,throatH+2*Math.tan(angleDeg*Math.PI/180)*0.45);
+  return function(t){ // t in [0,1]
+    const x=XL+t*L;
+    let h;
+    if(t<0.35){
+      // contraction: smooth cosine
+      const s=t/0.35;
+      h=inH+(throatH-inH)*0.5*(1-Math.cos(Math.PI*s));
+    } else if(t<0.45){
+      h=throatH;
+    } else {
+      // diffuser: linear opening
+      const s=(t-0.45)/0.55;
+      h=throatH+(outH-throatH)*s;
+    }
+    const cy=(YT+YB)/2;
+    const half=h*DH/2;
+    return {x, top:cy-half, bot:cy+half, h};
+  };
+}
+
+function ductPath(geo,N=200){
+  let topPts=[],botPts=[];
+  for(let i=0;i<=N;i++){
+    const g=geo(i/N);
+    topPts.push([g.x,g.top]);
+    botPts.push([g.x,g.bot]);
+  }
+  return {topPts,botPts};
+}
+
+// ---- Velocity field (quasi-2D) ----
+function velocity(t,y_norm,geo,Q){
+  // y_norm in [-1,1] relative to duct half-height
+  const g=geo(t);
+  const h=g.h;
+  const U=Q/h; // mean axial speed (quasi-1D)
+  // parabolic profile in y for viscous, plug for potential
+  return {u:U, v:0, U};
+}
+
+function velocityViscous(t,y_norm,geo,Q,mu,rho){
+  const g=geo(t);
+  const h=g.h;
+  const Re=rho*Q/(mu);
+  const U=Q/h;
+  // parabolic profile: u = 1.5*U*(1-y_norm^2)
+  const u=1.5*U*(1-y_norm*y_norm);
+  // transverse from incompressibility
+  const eps=0.002;
+  const g2=geo(Math.min(1,t+eps));
+  const dh=(g2.h-g.h)/eps;
+  const v=-y_norm*h*(-Q/(h*h))*dh; // from continuity
+  return {u:Math.max(0,u),v,U,Re};
+}
+
+// ---- Pressure field (Bernoulli for inviscid) ----
+function pressure(t,geo,Q,p0=1.0){
+  const g=geo(t);
+  const U=Q/g.h;
+  return p0+0.5*(1-U*U); // normalized
+}
+
+// ---- Color scales ----
+function pressureColor(p,pmin,pmax){
+  const t=Math.max(0,Math.min(1,(p-pmin)/(pmax-pmin)));
+  const r=Math.round(30+t*200);
+  const g=Math.round(80+t*60);
+  const b=Math.round(220-t*180);
+  return `rgb(${r},${g},${b})`;
+}
+function speedColor(u,umin,umax){
+  const t=Math.max(0,Math.min(1,(u-umin)/(umax-umin)));
+  const r=Math.round(20+t*220);
+  const g=Math.round(180-t*80);
+  const b=Math.round(220-t*200);
+  return `rgb(${r},${g},${b})`;
+}
+
+// ---- SVG helpers ----
+const svg=d3.select('#main-svg');
+let animId=null,frame=0;
+let currentTab='potential';
+let playingPot=true,playingVisc=true;
+
+function clearSVG(){svg.selectAll('*').remove();}
+
+// ---- POTENTIAL FLOW RENDERER ----
+function renderPotential(){
+  clearSVG();
+  const Q=+document.getElementById('Q-pot').value;
+  const throatW=+document.getElementById('throat-pot').value;
+  const angleDeg=+document.getElementById('angle-pot').value;
+  const geo=ductGeometry(Q,throatW,angleDeg);
+  const {topPts,botPts}=ductPath(geo,300);
+
+  // Background pressure field
+  const NX=80,NY=30;
+  const pressures=[];
+  for(let i=0;i<=NX;i++){
+    const t=i/NX;
+    pressures.push(pressure(t,geo,Q));
+  }
+  const pmin=d3.min(pressures),pmax=d3.max(pressures);
+
+  // Draw pressure background strips
+  for(let i=0;i<NX;i++){
+    const t1=i/NX,t2=(i+1)/NX;
+    const g1=geo(t1),g2=geo(t2);
+    const p1=pressure(t1,geo,Q);
+    const col=pressureColor(p1,pmin,pmax);
+    svg.append('polygon')
+      .attr('points',`${g1.x},${g1.top} ${g2.x},${g2.top} ${g2.x},${g2.bot} ${g1.x},${g1.bot}`)
+      .attr('fill',col).attr('opacity',0.55);
+  }
+
+  // Duct walls
+  const lineGen=d3.line().x(d=>d[0]).y(d=>d[1]).curve(d3.curveCatmullRom);
+  svg.append('path').datum(topPts).attr('d',lineGen).attr('fill','none').attr('stroke','#8ab0d0').attr('stroke-width',2.5);
+  svg.append('path').datum(botPts).attr('d',lineGen).attr('fill','none').attr('stroke','#8ab0d0').attr('stroke-width',2.5);
+
+  // Inlet/outlet caps
+  const g0=geo(0),g1=geo(1);
+  svg.append('line').attr('x1',g0.x).attr('y1',g0.top).attr('x2',g0.x).attr('y2',g0.bot).attr('stroke','#8ab0d0').attr('stroke-width',2);
+  svg.append('line').attr('x1',g1.x).attr('y1',g1.top).attr('x2',g1.x).attr('y2',g1.bot).attr('stroke','#8ab0d0').attr('stroke-width',2);
+
+  // Section labels
+  const labels=[{t:0.17,label:'Contraction'},{t:0.40,label:'Throat'},{t:0.72,label:'Diffuser'}];
+  labels.forEach(({t,label})=>{
+    const g=geo(t);
+    svg.append('text').attr('x',g.x).attr('y',YB+18).attr('text-anchor','middle').attr('class','section-label').text(label);
+  });
+
+  // Pressure colorbar label
+  svg.append('text').attr('x',XL).attr('y',YT-12).attr('fill','#4a9eff').attr('font-size','11px').text('← low p');
+  svg.append('text').attr('x',XR).attr('y',YT-12).attr('text-anchor','end').attr('fill','#ff6060').attr('font-size','11px').text('high p →');
+
+  // Streamlines (static, 7 lines)
+  const NS=7;
+  for(let si=0;si<NS;si++){
+    const yn=(si/(NS-1))*1.8-0.9; // y_norm in [-0.9,0.9]
+    const pts=[];
+    for(let i=0;i<=200;i++){
+      const t=i/200;
+      const g=geo(t);
+      const cy=(g.top+g.bot)/2;
+      const half=(g.bot-g.top)/2;
+      const y=cy+yn*half;
+      pts.push([g.x,y]);
+    }
+    svg.append('path').datum(pts).attr('d',lineGen)
+      .attr('fill','none').attr('stroke','#4a9eff').attr('stroke-width',si===Math.floor(NS/2)?2:1)
+      .attr('opacity',0.7);
+  }
+
+  // Velocity arrows at key sections
+  const arrowSections=[0.15,0.40,0.70,0.90];
+  arrowSections.forEach(t=>{
+    const g=geo(t);
+    const U=Q/g.h;
+    const len=Math.min(35,U*22);
+    const cy=(g.top+g.bot)/2;
+    svg.append('line').attr('x1',g.x).attr('y1',cy).attr('x2',g.x+len).attr('y2',cy)
+      .attr('stroke','#50e890').attr('stroke-width',2).attr('marker-end','url(#arrowhead)');
+    svg.append('text').attr('x',g.x+len+4).attr('y',cy+4).attr('fill','#50e890').attr('font-size','10px').text('V='+U.toFixed(2));
+  });
+
+  // Arrowhead marker
+  const defs=svg.append('defs');
+  defs.append('marker').attr('id','arrowhead').attr('markerWidth',8).attr('markerHeight',8)
+    .attr('refX',7).attr('refY',4).attr('orient','auto')
+    .append('path').attr('d','M0,0 L8,4 L0,8 Z').attr('fill','#50e890');
+
+  // Animated particles
+  const NP=22;
+  let particles=[];
+  function initParticles(){
+    particles=[];
+    for(let i=0;i<NP;i++){
+      const yn=(Math.random()*1.6-0.8);
+      particles.push({t:Math.random()*0.3,yn,trail:[]});
+    }
+  }
+  initParticles();
+
+  const particleGroup=svg.append('g');
+
+  function stepParticles(){
+    const dt=0.003;
+    particles.forEach(p=>{
+      const g=geo(p.t);
+      const U=Q/g.h;
+      // advect t
+      const L=XR-XL;
+      p.t+=U*dt/L*0.7;
+      // keep yn proportional to duct height (streamline tracking)
+      // trail
+      const cy=(g.top+g.bot)/2;
+      const half=(g.bot-g.top)/2;
+      const px=g.x, py=cy+p.yn*half;
+      p.trail.push([px,py]);
+      if(p.trail.length>18)p.trail.shift();
+      if(p.t>1){p.t=0;p.trail=[];}
+    });
+  }
+
+  function drawParticles(){
+    particleGroup.selectAll('*').remove();
+    particles.forEach(p=>{
+      if(p.trail.length<2)return;
+      const g=geo(p.t);
+      const U=Q/g.h;
+      const col=speedColor(U,Q/0.72,Q/throatW);
+      // trail
+      for(let i=1;i<p.trail.length;i++){
+        const alpha=i/p.trail.length;
+        particleGroup.append('line')
+          .attr('x1',p.trail[i-1][0]).attr('y1',p.trail[i-1][1])
+          .attr('x2',p.trail[i][0]).attr('y2',p.trail[i][1])
+          .attr('stroke',col).attr('stroke-width',1.5).attr('opacity',alpha*0.8);
+      }
+      // dot
+      const last=p.trail[p.trail.length-1];
+      particleGroup.append('circle').attr('cx',last[0]).attr('cy',last[1]).attr('r',3)
+        .attr('fill',col).attr('opacity',0.95);
+    });
+  }
+
+  if(animId)cancelAnimationFrame(animId);
+  function animate(){
+    if(currentTab!=='potential'){return;}
+    if(playingPot){
+      stepParticles();
+      drawParticles();
+      frame++;
+      document.getElementById('frame-info').textContent='frame '+frame+' | Re ≈ ∞ (inviscid)';
+    }
+    animId=requestAnimationFrame(animate);
+  }
+  animate();
+}
+
+// ---- VISCOUS FLOW RENDERER ----
+const fluids={
+  water:{rho:1000,mu:0.001,label:'Water',color:'#4a9eff'},
+  oil:{rho:870,mu:0.05,label:'Light Oil',color:'#ffd700'},
+  glycerin:{rho:1260,mu:1.5,label:'Glycerin',color:'#c080ff'},
+  air:{rho:1.2,mu:1.8e-5,label:'Air',color:'#80ffcc'},
+  honey:{rho:1400,mu:10,label:'Honey',color:'#ff9f40'}
+};
+
+function renderViscous(){
+  clearSVG();
+  const fluidKey=document.getElementById('fluid-sel').value;
+  const fl=fluids[fluidKey];
+  const Uin=+document.getElementById('U-visc').value;
+  const angleDeg=+document.getElementById('angle-visc').value;
+  const throatW=0.28;
+  const Q=Uin*0.72; // inlet area ~0.72
+  const geo=ductGeometry(Q,throatW,angleDeg);
+  const {topPts,botPts}=ductPath(geo,300);
+
+  const Re=fl.rho*Uin*(0.72*(YB-YT)/2)/fl.mu;
+  const ReStr=Re>1e6?Re.toExponential(2):Re.toFixed(0);
+
+  // Determine if separation likely (Re>500 and angle>12)
+  const separates=(Re>300&&angleDeg>12)||(Re>2000&&angleDeg>8);
+
+  // Background: velocity magnitude field
+  const NX=80;
+  const speeds=[];
+  for(let i=0;i<=NX;i++){
+    const t=i/NX;
+    const g=geo(t);
+    speeds.push(Q/g.h*1.5); // peak parabolic
+  }
+  const smin=d3.min(speeds),smax=d3.max(speeds);
+
+  for(let i=0;i<NX;i++){
+    const t1=i/NX,t2=(i+1)/NX;
+    const g1=geo(t1),g2=geo(t2);
+    const s1=speeds[i];
+    const col=speedColor(s1,smin,smax);
+    svg.append('polygon')
+      .attr('points',`${g1.x},${g1.top} ${g2.x},${g2.top} ${g2.x},${g2.bot} ${g1.x},${g1.bot}`)
+      .attr('fill',col).attr('opacity',0.4);
+  }
+
+  // Separation zone (if applicable)
+  if(separates){
+    const sepStart=0.50,sepEnd=0.95;
+    const sepPts=[];
+    for(let i=0;i<=60;i++){
+      const t=sepStart+(sepEnd-sepStart)*i/60;
+      const g=geo(t);
+      const sepThick=Math.min(0.35,(angleDeg-8)*0.025)*(g.bot-g.top)*0.5;
+      sepPts.push([g.x,g.top+sepThick]);
+    }
+    const sepPtsBot=[];
+    for(let i=0;i<=60;i++){
+      const t=sepStart+(sepEnd-sepStart)*i/60;
+      const g=geo(t);
+      sepPtsBot.push([g.x,g.top+3]);
+    }
+    const allPts=[...sepPts,...sepPtsBot.reverse()];
+    svg.append('polygon').attr('points',allPts.map(p=>p.join(',')).join(' '))
+      .attr('fill','#ff4040').attr('opacity',0.22);
+    // bottom wall too
+    const sepPtsB=[];
+    for(let i=0;i<=60;i++){
+      const t=sepStart+(sepEnd-sepStart)*i/60;
+      const g=geo(t);
+      const sepThick=Math.min(0.35,(angleDeg-8)*0.025)*(g.bot-g.top)*0.5;
+      sepPtsB.push([g.x,g.bot-sepThick]);
+    }
+    const sepPtsBtop=[];
+    for(let i=0;i<=60;i++){
+      const t=sepStart+(sepEnd-sepStart)*i/60;
+      const g=geo(t);
+      sepPtsBtop.push([g.x,g.bot-3]);
+    }
+    const allPtsB=[...sepPtsB,...sepPtsBtop.reverse()];
+    svg.append('polygon').attr('points',allPtsB.map(p=>p.join(',')).join(' '))
+      .attr('fill','#ff4040').attr('opacity',0.22);
+
+    svg.append('text').attr('x',geo(0.72).x).attr('y',YT-12)
+      .attr('fill','#ff6060').attr('font-size','11px').attr('text-anchor','middle')
+      .text('⚠ Flow separation detected');
+  }
+
+  // Duct walls
+  const lineGen=d3.line().x(d=>d[0]).y(d=>d[1]).curve(d3.curveCatmullRom);
+  svg.append('path').datum(topPts).attr('d',lineGen).attr('fill','none').attr('stroke','#8ab0d0').attr('stroke-width',2.5);
+  svg.append('path').datum(botPts).attr('d',lineGen).attr('fill','none').attr('stroke','#8ab0d0').attr('stroke-width',2.5);
+
+  // Boundary layer shading
+  const blThick=Math.min(0.12,5/Math.sqrt(Math.max(Re,1)));
+  for(let i=0;i<NX;i++){
+    const t1=i/NX,t2=(i+1)/NX;
+    const g1=geo(t1),g2=geo(t2);
+    const h1=(g1.bot-g1.top)*blThick,h2=(g2.bot-g2.top)*blThick;
+    svg.append('polygon')
+      .attr('points',`${g1.x},${g1.top} ${g2.x},${g2.top} ${g2.x},${g2.top+h2} ${g1.x},${g1.top+h1}`)
+      .attr('fill','#ffd700').attr('opacity',0.18);
+    svg.append('polygon')
+      .attr('points',`${g1.x},${g1.bot} ${g2.x},${g2.bot} ${g2.x},${g2.bot-h2} ${g1.x},${g1.bot-h1}`)
+      .attr('fill','#ffd700').attr('opacity',0.18);
+  }
+
+  // Velocity profiles at key sections (parabolic)
+  const profileSections=[0.15,0.40,0.70,0.90];
+  profileSections.forEach(t=>{
+    const g=geo(t);
+    const U=Q/g.h;
+    const cy=(g.top+g.bot)/2;
+    const half=(g.bot-g.top)/2;
+    const NY=20;
+    const pts=[];
+    for(let j=0;j<=NY;j++){
+      const yn=j/NY*2-1;
+      const u=1.5*U*(1-yn*yn);
+      const y=cy+yn*half;
+      const x=g.x+Math.min(u*18,40);
+      pts.push([x,y]);
+    }
+    pts.unshift([g.x,g.top]);
+    pts.push([g.x,g.bot]);
+    svg.append('polyline').attr('points',pts.map(p=>p.join(',')).join(' '))
+      .attr('fill','none').attr('stroke',fl.color).attr('stroke-width',1.5).attr('opacity',0.8);
+    svg.append('line').attr('x1',g.x).attr('y1',g.top).attr('x2',g.x).attr('y2',g.bot)
+      .attr('stroke',fl.color).attr('stroke-width',1).attr('opacity',0.4);
+  });
+
+  // Section labels
+  const labels=[{t:0.17,label:'Contraction'},{t:0.40,label:'Throat'},{t:0.72,label:'Diffuser'}];
+  labels.forEach(({t,label})=>{
+    const g=geo(t);
+    svg.append('text').attr('x',g.x).attr('y',YB+18).attr('text-anchor','middle').attr('class','section-label').text(label);
+  });
+
+  // Re label
+  svg.append('text').attr('x',W/2).attr('y',YT-12).attr('text-anchor','middle')
+    .attr('fill','#a0c8e0').attr('font-size','11px')
+    .text(`${fl.label} | Re ≈ ${ReStr} | μ = ${fl.mu} Pa·s`);
+
+  // Animated particles with parabolic advection
+  const NP=28;
+  let particles=[];
+  function initParticles(){
+    particles=[];
+    for(let i=0;i<NP;i++){
+      const yn=(Math.random()*1.6-0.8);
+      particles.push({t:Math.random()*0.4,yn,trail:[]});
+    }
+  }
+  initParticles();
+
+  const particleGroup=svg.append('g');
+
+  function stepParticles(){
+    const dt=0.0025;
+    particles.forEach(p=>{
+      const g=geo(p.t);
+      const U=Q/g.h;
+      const u=1.5*U*(1-p.yn*p.yn);
+      const L=XR-XL;
+      // check separation: near wall in diffuser
+      const inDiffuser=p.t>0.48;
+      const nearWall=Math.abs(p.yn)>0.75;
+      let speed=u;
+      if(separates&&inDiffuser&&nearWall){
+        speed=-u*0.3; // reversed flow
+      }
+      p.t+=speed*dt/L*0.7;
+      const cy=(g.top+g.bot)/2;
+      const half=(g.bot-g.top)/2;
+      const px=g.x, py=cy+p.yn*half;
+      p.trail.push([px,py]);
+      if(p.trail.length>20)p.trail.shift();
+      if(p.t>1||p.t<0){p.t=p.t>1?0:0.01;p.trail=[];}
+    });
+  }
+
+  function drawParticles(){
+    particleGroup.selectAll('*').remove();
+    particles.forEach(p=>{
+      if(p.trail.length<2)return;
+      const g=geo(p.t);
+      const U=Q/g.h;
+      const u=1.5*U*(1-p.yn*p.yn);
+      const inDiffuser=p.t>0.48;
+      const nearWall=Math.abs(p.yn)>0.75;
+      const reversed=separates&&inDiffuser&&nearWall;
+      const col=reversed?'#ff4040':fl.color;
+      for(let i=1;i<p.trail.length;i++){
+        const alpha=i/p.trail.length;
+        particleGroup.append('line')
+          .attr('x1',p.trail[i-1][0]).attr('y1',p.trail[i-1][1])
+          .attr('x2',p.trail[i][0]).attr('y2',p.trail[i][1])
+          .attr('stroke',col).attr('stroke-width',1.5).attr('opacity',alpha*0.85);
+      }
+      const last=p.trail[p.trail.length-1];
+      particleGroup.append('circle').attr('cx',last[0]).attr('cy',last[1]).attr('r',reversed?4:3)
+        .attr('fill',col).attr('opacity',0.95);
+    });
+  }
+
+  if(animId)cancelAnimationFrame(animId);
+  function animate(){
+    if(currentTab!=='viscous')return;
+    if(playingVisc){
+      stepParticles();
+      drawParticles();
+      frame++;
+      document.getElementById('frame-info').textContent=
+        `frame ${frame} | Re ≈ ${ReStr} | ${separates?'⚠ separation active':'attached flow'}`;
+    }
+    animId=requestAnimationFrame(animate);
+  }
+  animate();
+
+  // Update info box
+  document.getElementById('info-box').innerHTML=`
+    <b>Viscous Flow — ${fl.label}</b> (ρ=${fl.rho} kg/m³, μ=${fl.mu} Pa·s)<br>
+    Reynolds number Re = ρUL/μ ≈ <b>${ReStr}</b>. 
+    ${Re<10?'<b>Stokes regime</b>: viscosity dominates, convection negligible, parabolic profile develops quickly.':
+      Re<1000?'<b>Laminar regime</b>: parabolic (Poiseuille-like) profile, boundary layers visible.':
+      '<b>High-Re regime</b>: thin boundary layers, inertia dominates in core.'}
+    ${separates?'<br><b style="color:#ff8080">Flow separation occurs</b> in the diffuser: near-wall fluid lacks momentum to climb the adverse pressure gradient. Red particles show reversed flow.':
+    '<br>Flow remains <b>attached</b>. Reduce diffuser angle or increase viscosity to see separation.'}
+    <br>Velocity profiles (${fl.color==='#4a9eff'?'blue':'colored'} curves) show parabolic shape: u(y) = 1.5Ū(1−y²/h²).
+  `;
+}
+
+// ---- Tab switching ----
+function switchTab(tab){
+  currentTab=tab;
+  if(animId)cancelAnimationFrame(animId);
+  document.getElementById('tab-potential').classList.toggle('active',tab==='potential');
+  document.getElementById('tab-viscous').classList.toggle('active',tab==='viscous');
+  document.getElementById('controls-potential').style.display=tab==='potential'?'flex':'none';
+  document.getElementById('controls-viscous').style.display=tab==='viscous'?'flex':'none';
+  document.getElementById('legend-potential').style.display=tab==='potential'?'flex':'none';
+  document.getElementById('legend-viscous').style.display=tab==='viscous'?'flex':'none';
+  frame=0;
+  if(tab==='potential')renderPotential();
+  else renderViscous();
+}
+
+function togglePlay(which){
+  if(which==='pot'){
+    playingPot=!playingPot;
+    document.getElementById('play-pot').textContent=playingPot?'⏸ Pause':'▶ Play';
+    document.getElementById('play-pot').classList.toggle('stop',!playingPot);
+  } else {
+    playingVisc=!playingVisc;
+    document.getElementById('play-visc').textContent=playingVisc?'⏸ Pause':'▶ Play';
+    document.getElementById('play-visc').classList.toggle('stop',!playingVisc);
+  }
+}
+
+// ---- Live controls ----
+['Q-pot','throat-pot','angle-pot'].forEach(id=>{
+  document.getElementById(id).addEventListener('input',function(){
+    const suffix=id==='angle-pot'?'°':'';
+    document.getElementById(id+'-val').textContent=parseFloat(this.value).toFixed(id==='angle-pot'?0:2)+suffix;
+    if(currentTab==='potential'){if(animId)cancelAnimationFrame(animId);renderPotential();}
+  });
+});
+['U-visc','angle-visc'].forEach(id=>{
+  document.getElementById(id).addEventListener('input',function(){
+    document.getElementById(id+'-val').textContent=parseFloat(this.value).toFixed(id==='angle-visc'?0:2)+(id==='angle-visc'?'°':'');
+    if(currentTab==='viscous'){if(animId)cancelAnimationFrame(animId);renderViscous();}
+  });
+});
+document.getElementById('fluid-sel').addEventListener('change',function(){
+  if(currentTab==='viscous'){if(animId)cancelAnimationFrame(animId);renderViscous();}
+});
+
+// ---- Init ----
+renderPotential();
+</script>
+</body>
+</html>
