@@ -35,6 +35,27 @@
     "text": "About this site"
   },
   {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Irving Martínez Acosta",
+    "section": "",
+    "text": "LinkedIn\n  \n  \n    \n     Email"
+  },
+  {
+    "objectID": "index.html#about",
+    "href": "index.html#about",
+    "title": "Irving Martínez Acosta",
+    "section": "About",
+    "text": "About\nI am a mathematical scientist working on applied mathematics, scientific computing, and modeling. My interests include numerical analysis, PDEs, inverse problems, and data‑driven methods.\nI focus on bridging mathematical theory with computational practice, with applications in physics and engineering."
+  },
+  {
+    "objectID": "Untitled-1.html",
+    "href": "Untitled-1.html",
+    "title": "Irving Martínez Acosta",
+    "section": "",
+    "text": "import numpy as np\nimport matplotlib.pyplot as plt\n\n# Number of Fourier terms\nn_terms = 8  # You can adjust this value to increase accuracy\n\n# Define the time parameter t (from 0 to 2*pi)\nnum_points = 50  # Number of points for plotting and DFT\nt = np.linspace(0, 2 * np.pi, num_points)\n\n# Define the exact parametric heart shape\nx_exact = 16 * np.sin(t)**3\ny_exact = 13 * np.cos(t) - 5 * np.cos(2*t) - 2 * np.cos(3*t) - np.cos(4*t)\n\n# Perform a Discrete Fourier Transform (DFT) to get the Fourier coefficients\ndef compute_fourier_coefficients(signal, n_terms):\n    # Compute the DFT of the signal using numpy's FFT\n    fft_coeffs = np.fft.fft(signal) / len(signal)\n    \n    # We only need the first n_terms/2 positive frequencies (real and imaginary parts)\n    # We take real and imaginary parts to construct cosine and sine terms\n    a_coeffs = 2 * fft_coeffs.real[:n_terms//2]\n    b_coeffs = -2 * fft_coeffs.imag[:n_terms//2]\n   \n    # DC term (n=0) should not be doubled\n    a_coeffs[0] = fft_coeffs.real[0]\n    b_coeffs[0] = 0.0  # DC term for sine is always zero\n\n    return a_coeffs, b_coeffs\n\n# Compute Fourier coefficients for x(t) and y(t)\nA_x, B_x = compute_fourier_coefficients(x_exact, n_terms)\nA_y, B_y = compute_fourier_coefficients(y_exact, n_terms)\n\n# Reconstruct the Fourier series approximation of the heart shape\nx_approx = np.zeros_like(t)\ny_approx = np.zeros_like(t)\n\n# Add the Fourier series terms up to n_terms\nfor n in range(n_terms // 2):\n    if n == 0:\n        # DC term (n=0)\n        x_approx += A_x[n]\n        y_approx += A_y[n]\n    else:\n        # For n &gt; 0, add cosine and sine terms\n        x_approx += A_x[n] * np.cos(n * t) + B_x[n] * np.sin(n * t)\n        y_approx += A_y[n] * np.cos(n * t) + B_y[n] * np.sin(n * t)\n\n# Plot the exact heart shape and the Fourier series approximation\nplt.figure(figsize=(8, 8))\nplt.plot(x_exact, y_exact, 'k--', label='Exact Heart Shape', alpha=0.5)\nplt.plot(x_approx, y_approx, 'r', label=f'Fourier Series Approx. (n={n_terms})', linewidth=2)\nplt.title(f'Fourier Series Approximation of a Heart (n={n_terms})')\nplt.xlabel('x(t)')\nplt.ylabel('y(t)')\nplt.legend()\nplt.axis('equal')\nplt.grid(True)\nplt.show()"
+  },
+  {
     "objectID": "projects/index.html",
     "href": "projects/index.html",
     "title": "Projects",
@@ -77,25 +98,60 @@
     "text": "Modeling and simulation of coronary stents (2023)\nIn this project, we developed multi-domain modeling of coronary stents taking into account the full interplay among the wall, lumen, and struts through fluid-structure interactions. \n\n\n\n\n\n\n\n\n\n\n\n\nPaper (ACSE 2024) \nStent Modeling"
   },
   {
-    "objectID": "Untitled-1.html",
-    "href": "Untitled-1.html",
-    "title": "Irving Martínez Acosta",
+    "objectID": "blog/navier_stokes_duct.html",
+    "href": "blog/navier_stokes_duct.html",
+    "title": "Flow Through a Contraction–Throat–Diffuser Duct",
     "section": "",
-    "text": "import numpy as np\nimport matplotlib.pyplot as plt\n\n# Number of Fourier terms\nn_terms = 8  # You can adjust this value to increase accuracy\n\n# Define the time parameter t (from 0 to 2*pi)\nnum_points = 50  # Number of points for plotting and DFT\nt = np.linspace(0, 2 * np.pi, num_points)\n\n# Define the exact parametric heart shape\nx_exact = 16 * np.sin(t)**3\ny_exact = 13 * np.cos(t) - 5 * np.cos(2*t) - 2 * np.cos(3*t) - np.cos(4*t)\n\n# Perform a Discrete Fourier Transform (DFT) to get the Fourier coefficients\ndef compute_fourier_coefficients(signal, n_terms):\n    # Compute the DFT of the signal using numpy's FFT\n    fft_coeffs = np.fft.fft(signal) / len(signal)\n    \n    # We only need the first n_terms/2 positive frequencies (real and imaginary parts)\n    # We take real and imaginary parts to construct cosine and sine terms\n    a_coeffs = 2 * fft_coeffs.real[:n_terms//2]\n    b_coeffs = -2 * fft_coeffs.imag[:n_terms//2]\n   \n    # DC term (n=0) should not be doubled\n    a_coeffs[0] = fft_coeffs.real[0]\n    b_coeffs[0] = 0.0  # DC term for sine is always zero\n\n    return a_coeffs, b_coeffs\n\n# Compute Fourier coefficients for x(t) and y(t)\nA_x, B_x = compute_fourier_coefficients(x_exact, n_terms)\nA_y, B_y = compute_fourier_coefficients(y_exact, n_terms)\n\n# Reconstruct the Fourier series approximation of the heart shape\nx_approx = np.zeros_like(t)\ny_approx = np.zeros_like(t)\n\n# Add the Fourier series terms up to n_terms\nfor n in range(n_terms // 2):\n    if n == 0:\n        # DC term (n=0)\n        x_approx += A_x[n]\n        y_approx += A_y[n]\n    else:\n        # For n &gt; 0, add cosine and sine terms\n        x_approx += A_x[n] * np.cos(n * t) + B_x[n] * np.sin(n * t)\n        y_approx += A_y[n] * np.cos(n * t) + B_y[n] * np.sin(n * t)\n\n# Plot the exact heart shape and the Fourier series approximation\nplt.figure(figsize=(8, 8))\nplt.plot(x_exact, y_exact, 'k--', label='Exact Heart Shape', alpha=0.5)\nplt.plot(x_approx, y_approx, 'r', label=f'Fourier Series Approx. (n={n_terms})', linewidth=2)\nplt.title(f'Fourier Series Approximation of a Heart (n={n_terms})')\nplt.xlabel('x(t)')\nplt.ylabel('y(t)')\nplt.legend()\nplt.axis('equal')\nplt.grid(True)\nplt.show()"
+    "text": "This document provides a comprehensive derivation and simulation of incompressible duct flow. We explore the transition from inviscid potential theory to the viscous Navier-Stokes equations, focusing on the mechanics of acceleration and pressure recovery."
   },
   {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "Irving Martínez Acosta",
+    "objectID": "blog/navier_stokes_duct.html#introduction",
+    "href": "blog/navier_stokes_duct.html#introduction",
+    "title": "Flow Through a Contraction–Throat–Diffuser Duct",
     "section": "",
-    "text": "LinkedIn\n  \n  \n    \n     Email"
+    "text": "This document provides a comprehensive derivation and simulation of incompressible duct flow. We explore the transition from inviscid potential theory to the viscous Navier-Stokes equations, focusing on the mechanics of acceleration and pressure recovery."
   },
   {
-    "objectID": "index.html#about",
-    "href": "index.html#about",
-    "title": "Irving Martínez Acosta",
-    "section": "About",
-    "text": "About\nI am a mathematical scientist working on applied mathematics, scientific computing, and modeling. My interests include numerical analysis, PDEs, inverse problems, and data‑driven methods.\nI focus on bridging mathematical theory with computational practice, with applications in physics and engineering."
+    "objectID": "blog/navier_stokes_duct.html#the-geometry",
+    "href": "blog/navier_stokes_duct.html#the-geometry",
+    "title": "Flow Through a Contraction–Throat–Diffuser Duct",
+    "section": "§1 The Geometry",
+    "text": "§1 The Geometry\nThe duct follows a contraction–throat–diffuser profile defined by a smooth cosine contraction and a linear expansion.\n\n\nCode\nimport numpy as np\nimport matplotlib.pyplot as plt\nimport plotly.graph_objects as go\nfrom scipy.integrate import solve_ivp\n\ndef duct_h(x, h_in=0.36, h_t=0.14, angle_deg=8.0):\n    x_c, x_t = 0.35, 0.45\n    alpha = np.tan(np.radians(angle_deg))\n    x = np.atleast_1d(x)\n    h = np.empty_like(x)\n    h[x &lt; x_c] = h_in + (h_t - h_in) * 0.5 * (1 - np.cos(np.pi * x[x &lt; x_c] / x_c))\n    h[(x &gt;= x_c) & (x &lt; x_t)] = h_t\n    h[x &gt;= x_t] = h_t + alpha * (x[x &gt;= x_t] - x_t)\n    return h\n\nx_arr = np.linspace(0, 1, 500)\nh_arr = duct_h(x_arr)\n\nplt.figure(figsize=(10, 3), facecolor='#0f1117')\nax = plt.gca()\nax.set_facecolor('#141820')\nax.fill_between(x_arr, -h_arr, h_arr, color='#4a9eff', alpha=0.2)\nax.plot(x_arr, h_arr, color='#8ab0d0', lw=2)\nax.plot(x_arr, -h_arr, color='#8ab0d0', lw=2)\nplt.title(\"Duct Geometry\", color='white')\nplt.show()"
+  },
+  {
+    "objectID": "blog/navier_stokes_duct.html#potential-flow-and-bernoulli",
+    "href": "blog/navier_stokes_duct.html#potential-flow-and-bernoulli",
+    "title": "Flow Through a Contraction–Throat–Diffuser Duct",
+    "section": "§2 Potential Flow and Bernoulli",
+    "text": "§2 Potential Flow and Bernoulli\nIn inviscid flow, the speed \\(\\bar{U}(x)\\) is inversely proportional to \\(h(x)\\). Bernoulli’s principle states \\(p + \\frac{1}{2}\\rho U^2 = \\text{const}\\).\n\n\nCode\nQ = 0.08\nrho = 1.0\nU_bar = Q / (2 * h_arr)\np_arr = 1.0 + 0.5 * rho * (U_bar[0]**2 - U_bar**2)\n\nfig = go.Figure()\nfig.add_trace(go.Scatter(x=x_arr, y=U_bar, name='Velocity Ū'))\nfig.add_trace(go.Scatter(x=x_arr, y=p_arr, name='Pressure p'))\nfig.update_layout(template='plotly_dark', title=\"Quasi-1D Potential Flow\")\nfig.show()"
+  },
+  {
+    "objectID": "blog/navier_stokes_duct.html#the-navierstokes-equations",
+    "href": "blog/navier_stokes_duct.html#the-navierstokes-equations",
+    "title": "Flow Through a Contraction–Throat–Diffuser Duct",
+    "section": "§3 The Navier–Stokes Equations",
+    "text": "§3 The Navier–Stokes Equations\nWe consider steady, incompressible flow: \\[ \\rho(\\mathbf{u}\\cdot\\nabla)\\mathbf{u} = -\\nabla p + \\mu\\nabla^2\\mathbf{u} \\]\nIn the contraction, convection dominates; in the diffuser, the adverse pressure gradient and viscosity can lead to separation."
+  },
+  {
+    "objectID": "blog/navier_stokes_duct.html#viscosity-and-the-boundary-layer",
+    "href": "blog/navier_stokes_duct.html#viscosity-and-the-boundary-layer",
+    "title": "Flow Through a Contraction–Throat–Diffuser Duct",
+    "section": "§4 Viscosity and the Boundary Layer",
+    "text": "§4 Viscosity and the Boundary Layer\nViscosity causes the no-slip condition at the wall, creating parabolic velocity profiles.\n\n\nCode\ndef profile(y, h, U_avg):\n    return 1.5 * U_avg * (1 - (y/h)**2)\n\nh_throat = duct_h(0.4)[0]\nU_throat = Q / (2 * h_throat)\ny_vals = np.linspace(-h_throat, h_throat, 100)\nu_vals = profile(y_vals, h_throat, U_throat)\n\nplt.figure(figsize=(6, 4))\nplt.plot(u_vals, y_vals)\nplt.title(\"Viscous Velocity Profile at Throat\")\nplt.show()"
+  },
+  {
+    "objectID": "blog/navier_stokes_duct.html#particle-trajectories-animated",
+    "href": "blog/navier_stokes_duct.html#particle-trajectories-animated",
+    "title": "Flow Through a Contraction–Throat–Diffuser Duct",
+    "section": "§5 Particle Trajectories (Animated)",
+    "text": "§5 Particle Trajectories (Animated)\nWe integrate the Lagrangian paths \\(\\frac{d\\mathbf{x}}{dt} = \\mathbf{u}\\).\n\n\nCode\nimport numpy as np\nimport plotly.graph_objects as go\nfrom scipy.integrate import solve_ivp\n\ndef get_vel(x, y, Q=0.08, mode='viscous'):\n    h = duct_h(x)[0]\n    u_avg = Q / (2*h)\n    u = 1.5 * u_avg * (1 - (y/h)**2) if mode=='viscous' else u_avg\n    # Approximation for v via continuity\n    dx = 1e-4\n    dh_dx = (duct_h(x+dx)[0] - h) / dx\n    v = -y * (u_avg/h) * dh_dx\n    return u, v\n\nn_particles = 9\ny0s = np.linspace(-0.25, 0.25, n_particles)\nt_eval = np.linspace(0, 2.5, 120)\n\nframes = []\nparticle_data = [solve_ivp(lambda t, p: get_vel(p[0], p[1]), [0, 2.5], [0, y], t_eval=t_eval).y for y in y0s]\n\nfor k in range(len(t_eval)):\n    frame_pts = []\n    for p in particle_data:\n        frame_pts.append(go.Scatter(x=[p[0, k]], y=[p[1, k]], mode='markers', marker=dict(size=6)))\n    frames.append(go.Frame(data=frame_pts, name=str(k)))\n\nfig_anim = go.Figure(data=frames[0].data, frames=frames)\nfig_anim.update_layout(xaxis=dict(range=[0, 1]), yaxis=dict(range=[-0.5, 0.5]),\n                       updatemenus=[dict(type=\"buttons\", buttons=[dict(label=\"Play\", method=\"animate\", args=[None])])],\n                       template='plotly_dark')\nfig_anim.show()"
+  },
+  {
+    "objectID": "blog/navier_stokes_duct.html#final-summary-dashboard",
+    "href": "blog/navier_stokes_duct.html#final-summary-dashboard",
+    "title": "Flow Through a Contraction–Throat–Diffuser Duct",
+    "section": "§6 Final Summary Dashboard",
+    "text": "§6 Final Summary Dashboard\nA unified view of the duct’s performance fields.\n\n\nCode\nfig, axs = plt.subplots(2, 1, figsize=(10, 8), sharex=True)\naxs[0].plot(x_arr, U_bar, color='lime', label='Velocity')\naxs[0].set_ylabel(\"m/s\")\naxs[1].plot(x_arr, p_arr, color='orange', label='Pressure')\naxs[1].set_ylabel(\"Pa\")\nplt.show()"
   },
   {
     "objectID": "cv/index.html",
