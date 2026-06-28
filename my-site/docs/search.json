@@ -35,6 +35,27 @@
     "text": "About this site"
   },
   {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Irving Martínez Acosta",
+    "section": "",
+    "text": "LinkedIn\n  \n  \n    \n     Email"
+  },
+  {
+    "objectID": "index.html#about",
+    "href": "index.html#about",
+    "title": "Irving Martínez Acosta",
+    "section": "About",
+    "text": "About\nI am a mathematical scientist working on applied mathematics, scientific computing, and modeling. My interests include numerical analysis, PDEs, inverse problems, and data‑driven methods.\nI focus on bridging mathematical theory with computational practice, with applications in physics and engineering."
+  },
+  {
+    "objectID": "Untitled-1.html",
+    "href": "Untitled-1.html",
+    "title": "Irving Martínez Acosta",
+    "section": "",
+    "text": "import numpy as np\nimport matplotlib.pyplot as plt\n\n# Number of Fourier terms\nn_terms = 8  # You can adjust this value to increase accuracy\n\n# Define the time parameter t (from 0 to 2*pi)\nnum_points = 50  # Number of points for plotting and DFT\nt = np.linspace(0, 2 * np.pi, num_points)\n\n# Define the exact parametric heart shape\nx_exact = 16 * np.sin(t)**3\ny_exact = 13 * np.cos(t) - 5 * np.cos(2*t) - 2 * np.cos(3*t) - np.cos(4*t)\n\n# Perform a Discrete Fourier Transform (DFT) to get the Fourier coefficients\ndef compute_fourier_coefficients(signal, n_terms):\n    # Compute the DFT of the signal using numpy's FFT\n    fft_coeffs = np.fft.fft(signal) / len(signal)\n    \n    # We only need the first n_terms/2 positive frequencies (real and imaginary parts)\n    # We take real and imaginary parts to construct cosine and sine terms\n    a_coeffs = 2 * fft_coeffs.real[:n_terms//2]\n    b_coeffs = -2 * fft_coeffs.imag[:n_terms//2]\n   \n    # DC term (n=0) should not be doubled\n    a_coeffs[0] = fft_coeffs.real[0]\n    b_coeffs[0] = 0.0  # DC term for sine is always zero\n\n    return a_coeffs, b_coeffs\n\n# Compute Fourier coefficients for x(t) and y(t)\nA_x, B_x = compute_fourier_coefficients(x_exact, n_terms)\nA_y, B_y = compute_fourier_coefficients(y_exact, n_terms)\n\n# Reconstruct the Fourier series approximation of the heart shape\nx_approx = np.zeros_like(t)\ny_approx = np.zeros_like(t)\n\n# Add the Fourier series terms up to n_terms\nfor n in range(n_terms // 2):\n    if n == 0:\n        # DC term (n=0)\n        x_approx += A_x[n]\n        y_approx += A_y[n]\n    else:\n        # For n &gt; 0, add cosine and sine terms\n        x_approx += A_x[n] * np.cos(n * t) + B_x[n] * np.sin(n * t)\n        y_approx += A_y[n] * np.cos(n * t) + B_y[n] * np.sin(n * t)\n\n# Plot the exact heart shape and the Fourier series approximation\nplt.figure(figsize=(8, 8))\nplt.plot(x_exact, y_exact, 'k--', label='Exact Heart Shape', alpha=0.5)\nplt.plot(x_approx, y_approx, 'r', label=f'Fourier Series Approx. (n={n_terms})', linewidth=2)\nplt.title(f'Fourier Series Approximation of a Heart (n={n_terms})')\nplt.xlabel('x(t)')\nplt.ylabel('y(t)')\nplt.legend()\nplt.axis('equal')\nplt.grid(True)\nplt.show()"
+  },
+  {
     "objectID": "projects/index.html",
     "href": "projects/index.html",
     "title": "Projects",
@@ -75,34 +96,6 @@
     "title": "Projects",
     "section": "Modeling and simulation of coronary stents (2023)",
     "text": "Modeling and simulation of coronary stents (2023)\nIn this project, we developed multi-domain modeling of coronary stents taking into account the full interplay among the wall, lumen, and struts through fluid-structure interactions. \n\n\n\n\n\n\n\n\n\n\n\n\nPaper (ACSE 2024) \nStent Modeling"
-  },
-  {
-    "objectID": "Untitled-1.html",
-    "href": "Untitled-1.html",
-    "title": "Irving Martínez Acosta",
-    "section": "",
-    "text": "import numpy as np\nimport matplotlib.pyplot as plt\n\n# Number of Fourier terms\nn_terms = 8  # You can adjust this value to increase accuracy\n\n# Define the time parameter t (from 0 to 2*pi)\nnum_points = 50  # Number of points for plotting and DFT\nt = np.linspace(0, 2 * np.pi, num_points)\n\n# Define the exact parametric heart shape\nx_exact = 16 * np.sin(t)**3\ny_exact = 13 * np.cos(t) - 5 * np.cos(2*t) - 2 * np.cos(3*t) - np.cos(4*t)\n\n# Perform a Discrete Fourier Transform (DFT) to get the Fourier coefficients\ndef compute_fourier_coefficients(signal, n_terms):\n    # Compute the DFT of the signal using numpy's FFT\n    fft_coeffs = np.fft.fft(signal) / len(signal)\n    \n    # We only need the first n_terms/2 positive frequencies (real and imaginary parts)\n    # We take real and imaginary parts to construct cosine and sine terms\n    a_coeffs = 2 * fft_coeffs.real[:n_terms//2]\n    b_coeffs = -2 * fft_coeffs.imag[:n_terms//2]\n   \n    # DC term (n=0) should not be doubled\n    a_coeffs[0] = fft_coeffs.real[0]\n    b_coeffs[0] = 0.0  # DC term for sine is always zero\n\n    return a_coeffs, b_coeffs\n\n# Compute Fourier coefficients for x(t) and y(t)\nA_x, B_x = compute_fourier_coefficients(x_exact, n_terms)\nA_y, B_y = compute_fourier_coefficients(y_exact, n_terms)\n\n# Reconstruct the Fourier series approximation of the heart shape\nx_approx = np.zeros_like(t)\ny_approx = np.zeros_like(t)\n\n# Add the Fourier series terms up to n_terms\nfor n in range(n_terms // 2):\n    if n == 0:\n        # DC term (n=0)\n        x_approx += A_x[n]\n        y_approx += A_y[n]\n    else:\n        # For n &gt; 0, add cosine and sine terms\n        x_approx += A_x[n] * np.cos(n * t) + B_x[n] * np.sin(n * t)\n        y_approx += A_y[n] * np.cos(n * t) + B_y[n] * np.sin(n * t)\n\n# Plot the exact heart shape and the Fourier series approximation\nplt.figure(figsize=(8, 8))\nplt.plot(x_exact, y_exact, 'k--', label='Exact Heart Shape', alpha=0.5)\nplt.plot(x_approx, y_approx, 'r', label=f'Fourier Series Approx. (n={n_terms})', linewidth=2)\nplt.title(f'Fourier Series Approximation of a Heart (n={n_terms})')\nplt.xlabel('x(t)')\nplt.ylabel('y(t)')\nplt.legend()\nplt.axis('equal')\nplt.grid(True)\nplt.show()"
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "Irving Martínez Acosta",
-    "section": "",
-    "text": "LinkedIn\n  \n  \n    \n     Email"
-  },
-  {
-    "objectID": "index.html#about",
-    "href": "index.html#about",
-    "title": "Irving Martínez Acosta",
-    "section": "About",
-    "text": "About\nI am a mathematical scientist working on applied mathematics, scientific computing, and modeling. My interests include numerical analysis, PDEs, inverse problems, and data‑driven methods.\nI focus on bridging mathematical theory with computational practice, with applications in physics and engineering."
-  },
-  {
-    "objectID": "cv/index.html",
-    "href": "cv/index.html",
-    "title": "Curriculum vitae",
-    "section": "",
-    "text": "Download current CV"
   },
   {
     "objectID": "blog/navier_stokes_duct.html",
@@ -159,5 +152,12 @@
     "title": "Flow Through a Contraction–Throat–Diffuser Duct",
     "section": "§6 Final Summary Dashboard",
     "text": "§6 Final Summary Dashboard\nA unified view of the duct’s performance fields.\n\n\nCode\nfig, axs = plt.subplots(2, 1, figsize=(10, 8), sharex=True)\naxs[0].plot(x_arr, U_bar, color='lime', label='Velocity')\naxs[0].set_ylabel(\"m/s\")\naxs[1].plot(x_arr, p_arr, color='orange', label='Pressure')\naxs[1].set_ylabel(\"Pa\")\nplt.show()"
+  },
+  {
+    "objectID": "cv/index.html",
+    "href": "cv/index.html",
+    "title": "Curriculum vitae",
+    "section": "",
+    "text": "Download current CV"
   }
 ]

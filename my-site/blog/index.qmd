@@ -1,0 +1,12 @@
+---
+title: "Mini-Blog"
+listing:
+  contents: .             # If your posts are inside a "posts" folder, or use "." for current folder
+  type: default               # Can be: default, grid, or table
+  sort: "date desc"           # Shows newest posts first
+  categories: true            # Enables a sidebar tag filter
+  sort-ui: false
+  filter-ui: false
+---
+
+Welcome to my blog subsection! Below you will find all my recent entries.
