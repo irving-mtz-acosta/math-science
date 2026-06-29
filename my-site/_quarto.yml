@@ -39,8 +39,8 @@ website:
         #href: mathematics/index.qmd
       #- text: "Interests"
         #href: photography/index.qmd
-      - text: "Mini-Blog"
-        href: blog/index.qmd
+      #- text: "Mini-Blog"
+        #href: blog/index.qmd
       - text: "CV"
         href: cv/index.qmd
     
