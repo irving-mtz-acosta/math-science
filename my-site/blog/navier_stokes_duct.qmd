@@ -22,9 +22,9 @@ jupyter: python3
 This document provides a comprehensive derivation and simulation of incompressible duct flow. We explore the transition from inviscid potential theory to the viscous Navier-Stokes equations, focusing on the mechanics of acceleration and pressure recovery.
 
 ```{=html}
-<iframe src="duct_flow_simulation.html" 
+<iframe src="Duct_Flow_Simulation_Toggle.html" 
         width="100%" 
-        height="750" 
+        height="100%" 
         style="border: 1px solid #2a3a50; border-radius: 12px; background: #0f1117;"
         scrolling="no">
 </iframe>

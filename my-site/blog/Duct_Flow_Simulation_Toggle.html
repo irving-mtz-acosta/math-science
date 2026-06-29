@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Duct Flow: Potential Flow (Inviscid)</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:Georgia,serif;background:#0f1117;color:#e8e8e8;padding:20px;}
+  h1{text-align:center;font-size:1.4em;color:#c8d8f0;margin-bottom:4px;letter-spacing:.04em;}
+  .subtitle{text-align:center;font-size:.82em;color:#7a9ab8;margin-bottom:18px;}
+  .controls{display:flex;flex-wrap:wrap;justify-content:center;gap:14px;margin-bottom:14px;align-items:center;}
+  .ctrl{display:flex;flex-direction:column;align-items:center;gap:3px;font-size:.75em;color:#8ab0c8;}
+  .ctrl input[type=range]{background:#181c26;color:#c8e0ff;border:1px solid #334;border-radius:6px;padding:3px 7px;font-size:.82em;width:110px;accent-color:#4a7ab0;}
+  .btn{padding:6px 18px;border-radius:16px;border:1.5px solid #4a7ab0;background:#1e3a5f;color:#c8e0ff;cursor:pointer;font-size:.82em;transition:all .2s;}
+  .btn:hover{background:#2a4f7a;}
+  .btn.stop{border-color:#a04040;background:#3a1a1a;color:#f0a0a0;}
+  .toggle-group{display:flex;align-items:center;gap:0;border:1.5px solid #4a7ab0;border-radius:20px;overflow:hidden;}
+  .toggle-btn{padding:6px 16px;background:#181c26;color:#8ab0d0;cursor:pointer;font-size:.78em;border:none;transition:all .2s;}
+  .toggle-btn.active{background:#1e3a5f;color:#c8e0ff;}
+  svg{display:block;margin:0 auto;}
+  .legend{display:flex;flex-wrap:wrap;justify-content:center;gap:14px;margin-top:10px;font-size:.75em;color:#8ab0c8;}
+  .leg-item{display:flex;align-items:center;gap:5px;}
+  .leg-swatch{width:22px;height:3px;border-radius:2px;}
+  .info-box{max-width:700px;margin:14px auto 0;background:#141820;border:1px solid #2a3a50;border-radius:10px;padding:14px 18px;font-size:.8em;line-height:1.7;color:#a8c0d8;}
+  .info-box b{color:#c8e0ff;}
+  .section-label{font-size:.7em;fill:#7a9ab8;font-style:italic;}
+  .frame-counter{text-align:center;font-size:.72em;color:#556;margin-top:4px;}
+</style>
+</head>
+<body>
+<h1>Potential Flow Through a Contraction–Throat–Diffuser Duct</h1>
+<div class="subtitle">Inviscid · Irrotational · Steady</div>
+
+<div class="controls">
+  <div class="ctrl"><span>Flow rate Q</span><input type="range" id="Q-pot" min="0.3" max="1.5" step="0.05" value="0.8"/><span id="Q-pot-val">0.80</span></div>
+  <div class="ctrl"><span>Throat width</span><input type="range" id="throat-pot" min="0.15" max="0.45" step="0.01" value="0.28"/><span id="throat-pot-val">0.28</span></div>
+  <div class="ctrl"><span>Diffuser angle</span><input type="range" id="angle-pot" min="3" max="20" step="1" value="8"/><span id="angle-pot-val">8°</span></div>
+  <div class="ctrl">
+    <span>Particle init</span>
+    <div class="toggle-group">
+      <div class="toggle-btn active" id="btn-uniform" onclick="setMode('uniform')">Uniform</div>
+      <div class="toggle-btn" id="btn-random" onclick="setMode('random')">Random</div>
+    </div>
+  </div>
+  <button class="btn" id="play-btn" onclick="togglePlay()">⏸ Pause</button>
+  <button class="btn" id="reset-btn" onclick="resetParticles()">↺ Reset</button>
+</div>
+
+<svg id="main-svg" width="700" height="380"></svg>
+<div class="frame-counter" id="frame-info">frame 0</div>
+
+<div class="legend">
+  <div class="leg-item"><div class="leg-swatch" style="background:#4a9eff"></div>Streamlines</div>
+  <div class="leg-item"><div class="leg-swatch" style="background:linear-gradient(to right,#1e50dc,#ff6060);height:8px;border-radius:3px;width:40px"></div>Pressure (low→high)</div>
+  <div class="leg-item"><div class="leg-swatch" style="background:#50e890"></div>Velocity (slow→fast)</div>
+</div>
+
+<div class="info-box" id="info-box">
+  <b>Potential Flow (Inviscid, Irrotational)</b><br>
+  Velocity is derived from continuity: <b>U(x) = Q / h(x)</b>. In the <b>contraction</b>, streamlines converge → speed increases → pressure drops (Bernoulli). At the <b>throat</b>, speed is maximum and pressure is minimum. In the <b>diffuser</b>, streamlines diverge → speed decreases → pressure recovers.<br><br>
+  <b>Uniform mode</b>: particles are placed on a regular grid — you can clearly see the streamlines squeezing together and the acceleration at the throat.<br>
+  <b>Random mode</b>: particles are seeded randomly — gives a more realistic "dye injection" appearance.
+</div>
+
+<script>
+const W=700,H=380,PAD=40;
+const XL=PAD,XR=W-PAD,YT=50,YB=H-60;
+const DH=YB-YT;
+
+let animId=null, frame=0, playing=true;
+let particleMode='uniform';
+let particles=[];
+let geo, Q, throatW, angleDeg;
+
+// ---- Geometry ----
+function buildGeo(q, tw, ad){
+  const L=XR-XL;
+  const inH=0.72, throatH=tw;
+  return function(t){
+    t=Math.max(0,Math.min(1,t));
+    const x=XL+t*L;
+    let h;
+    if(t<0.35){
+      const s=t/0.35;
+      h=inH+(throatH-inH)*0.5*(1-Math.cos(Math.PI*s));
+    } else if(t<0.45){
+      h=throatH;
+    } else {
+      const s=(t-0.45)/0.55;
+      const outH=Math.min(0.95,throatH+2*Math.tan(ad*Math.PI/180)*0.45);
+      h=throatH+(outH-throatH)*s;
+    }
+    const cy=(YT+YB)/2;
+    const half=h*DH/2;
+    return {x, top:cy-half, bot:cy+half, h};
+  };
+}
+
+function ductPath(g,N=300){
+  let top=[],bot=[];
+  for(let i=0;i<=N;i++){const r=g(i/N);top.push([r.x,r.top]);bot.push([r.x,r.bot]);}
+  return {top,bot};
+}
+
+function pressure(t,g,q,p0=1.0){
+  const U=q/g(t).h;
+  return p0+0.5*(1-U*U);
+}
+
+function pressureColor(p,pmin,pmax){
+  const t=Math.max(0,Math.min(1,(p-pmin)/(pmax-pmin)));
+  const r=Math.round(30+t*200);
+  const gb=Math.round(80+t*60);
+  const b=Math.round(220-t*180);
+  return `rgb(${r},${gb},${b})`;
+}
+
+function speedColor(u,umin,umax){
+  const t=Math.max(0,Math.min(1,(u-umin)/(umax-umin)));
+  const r=Math.round(20+t*220);
+  const g=Math.round(180-t*80);
+  const b=Math.round(220-t*200);
+  return `rgb(${r},${g},${b})`;
+}
+
+// ---- Particle init ----
+function initUniform(){
+  particles=[];
+  const cols=8, rows=9;
+  for(let r=0;r<rows;r++){
+    const yn=-0.88+1.76*r/(rows-1);
+    for(let c=0;c<cols;c++){
+      particles.push({t:c/cols, yn, trail:[]});
+    }
+  }
+}
+
+function initRandom(){
+  particles=[];
+  for(let i=0;i<70;i++){
+    particles.push({t:Math.random()*0.9, yn:(Math.random()*1.76-0.88), trail:[]});
+  }
+}
+
+function resetParticles(){
+  if(particleMode==='uniform') initUniform();
+  else initRandom();
+  frame=0;
+}
+
+function setMode(mode){
+  particleMode=mode;
+  document.getElementById('btn-uniform').classList.toggle('active',mode==='uniform');
+  document.getElementById('btn-random').classList.toggle('active',mode==='random');
+  resetParticles();
+}
+
+// ---- Step ----
+function stepParticles(){
+  const dt=0.004;
+  const L=XR-XL;
+  particles.forEach(p=>{
+    const g=geo(p.t);
+    const U=Q/g.h;
+    // advance t proportional to local velocity
+    p.t += (U*dt)/L * 28;
+    if(p.t>1){
+      if(particleMode==='uniform'){
+        p.t=0; p.trail=[];
+      } else {
+        p.t=0; p.yn=(Math.random()*1.76-0.88); p.trail=[];
+      }
+    }
+    const r=geo(p.t);
+    const cy=(r.top+r.bot)/2;
+    const half=(r.bot-r.top)/2;
+    p.trail.push([r.x, cy+p.yn*half]);
+    if(p.trail.length>22) p.trail.shift();
+  });
+}
+
+// ---- Draw ----
+const svg=d3.select('#main-svg');
+let particleGroup;
+
+function drawStatic(){
+  svg.selectAll('*').remove();
+
+  // Pressure background
+  const NX=80;
+  const pressures=[];
+  for(let i=0;i<=NX;i++) pressures.push(pressure(i/NX,geo,Q));
+  const pmin=d3.min(pressures), pmax=d3.max(pressures);
+  for(let i=0;i<NX;i++){
+    const g1=geo(i/NX), g2=geo((i+1)/NX);
+    svg.append('polygon')
+      .attr('points',`${g1.x},${g1.top} ${g2.x},${g2.top} ${g2.x},${g2.bot} ${g1.x},${g1.bot}`)
+      .attr('fill',pressureColor(pressures[i],pmin,pmax)).attr('opacity',0.55);
+  }
+
+  // Walls
+  const lineGen=d3.line().x(d=>d[0]).y(d=>d[1]).curve(d3.curveCatmullRom);
+  const {top,bot}=ductPath(geo);
+  svg.append('path').datum(top).attr('d',lineGen).attr('fill','none').attr('stroke','#8ab0d0').attr('stroke-width',2.5);
+  svg.append('path').datum(bot).attr('d',lineGen).attr('fill','none').attr('stroke','#8ab0d0').attr('stroke-width',2.5);
+
+  // Caps
+  const g0=geo(0),g1=geo(1);
+  svg.append('line').attr('x1',g0.x).attr('y1',g0.top).attr('x2',g0.x).attr('y2',g0.bot).attr('stroke','#8ab0d0').attr('stroke-width',2);
+  svg.append('line').attr('x1',g1.x).attr('y1',g1.top).attr('x2',g1.x).attr('y2',g1.bot).attr('stroke','#8ab0d0').attr('stroke-width',2);
+
+  // Streamlines
+  const NS=7;
+  for(let si=0;si<NS;si++){
+    const yn=-0.9+1.8*si/(NS-1);
+    const pts=[];
+    for(let i=0;i<=200;i++){
+      const t=i/200, r=geo(t);
+      const cy=(r.top+r.bot)/2, half=(r.bot-r.top)/2;
+      pts.push([r.x, cy+yn*half]);
+    }
+    svg.append('path').datum(pts).attr('d',lineGen)
+      .attr('fill','none').attr('stroke','#4a9eff')
+      .attr('stroke-width',si===3?2:1).attr('opacity',0.5);
+  }
+
+  // Arrowhead marker
+  const defs=svg.append('defs');
+  defs.append('marker').attr('id','arrowhead').attr('markerWidth',8).attr('markerHeight',8)
+    .attr('refX',7).attr('refY',4).attr('orient','auto')
+    .append('path').attr('d','M0,0 L8,4 L0,8 Z').attr('fill','#50e890');
+
+  // Velocity arrows
+  const umin=Q/0.72, umax=Q/throatW;
+  [0.15,0.40,0.70,0.90].forEach(t=>{
+    const r=geo(t);
+    const U=Q/r.h;
+    const len=Math.min(38,U*20);
+    const cy=(r.top+r.bot)/2;
+    svg.append('line').attr('x1',r.x).attr('y1',cy).attr('x2',r.x+len).attr('y2',cy)
+      .attr('stroke','#50e890').attr('stroke-width',2).attr('marker-end','url(#arrowhead)');
+    svg.append('text').attr('x',r.x+len+4).attr('y',cy+4).attr('fill','#50e890').attr('font-size','10px').text('V='+U.toFixed(2));
+  });
+
+  // Section labels
+  [{t:0.17,label:'Contraction'},{t:0.40,label:'Throat'},{t:0.72,label:'Diffuser'}].forEach(({t,label})=>{
+    const r=geo(t);
+    svg.append('text').attr('x',r.x).attr('y',YB+18).attr('text-anchor','middle').attr('class','section-label').text(label);
+  });
+
+  // Pressure labels
+  svg.append('text').attr('x',XL).attr('y',YT-12).attr('fill','#4a9eff').attr('font-size','11px').text('← low p');
+  svg.append('text').attr('x',XR).attr('y',YT-12).attr('text-anchor','end').attr('fill','#ff6060').attr('font-size','11px').text('high p →');
+
+  // Particle group on top
+  particleGroup=svg.append('g');
+}
+
+function drawParticles(){
+  particleGroup.selectAll('*').remove();
+  const umin=Q/0.72, umax=Q/throatW;
+  particles.forEach(p=>{
+    if(p.trail.length<2) return;
+    const r=geo(p.t);
+    const U=Q/r.h;
+    const col=speedColor(U,umin,umax);
+    for(let i=1;i<p.trail.length;i++){
+      const alpha=i/p.trail.length;
+      particleGroup.append('line')
+        .attr('x1',p.trail[i-1][0]).attr('y1',p.trail[i-1][1])
+        .attr('x2',p.trail[i][0]).attr('y2',p.trail[i][1])
+        .attr('stroke',col).attr('stroke-width',1.5).attr('opacity',alpha*0.85);
+    }
+    const last=p.trail[p.trail.length-1];
+    particleGroup.append('circle').attr('cx',last[0]).attr('cy',last[1]).attr('r',3)
+      .attr('fill',col).attr('opacity',0.95);
+  });
+}
+
+// ---- Animation loop ----
+function animate(){
+  if(playing){
+    stepParticles();
+    drawParticles();
+    frame++;
+    document.getElementById('frame-info').textContent=
+      `frame ${frame} | Q=${Q.toFixed(2)} | Re ≈ ∞ (inviscid) | mode: ${particleMode}`;
+  }
+  animId=requestAnimationFrame(animate);
+}
+
+function togglePlay(){
+  playing=!playing;
+  const btn=document.getElementById('play-btn');
+  btn.textContent=playing?'⏸ Pause':'▶ Play';
+  btn.classList.toggle('stop',!playing);
+}
+
+// ---- Controls ----
+function readControls(){
+  Q=+document.getElementById('Q-pot').value;
+  throatW=+document.getElementById('throat-pot').value;
+  angleDeg=+document.getElementById('angle-pot').value;
+  document.getElementById('Q-pot-val').textContent=Q.toFixed(2);
+  document.getElementById('throat-pot-val').textContent=throatW.toFixed(2);
+  document.getElementById('angle-pot-val').textContent=angleDeg+'°';
+  geo=buildGeo(Q,throatW,angleDeg);
+}
+
+['Q-pot','throat-pot','angle-pot'].forEach(id=>{
+  document.getElementById(id).addEventListener('input',()=>{
+    if(animId) cancelAnimationFrame(animId);
+    readControls();
+    drawStatic();
+    resetParticles();
+    animate();
+  });
+});
+
+// ---- Init ----
+readControls();
+drawStatic();
+initUniform();
+animate();
+</script>
+</body>
+</html>

@@ -267,7 +267,7 @@ function renderPotential(){
     .append('path').attr('d','M0,0 L8,4 L0,8 Z').attr('fill','#50e890');
 
   // Animated particles
-  const NP=22;
+  const NP=60;
   let particles=[];
   function initParticles(){
     particles=[];
@@ -280,24 +280,39 @@ function renderPotential(){
 
   const particleGroup=svg.append('g');
 
-  function stepParticles(){
-    const dt=0.003;
-    particles.forEach(p=>{
-      const g=geo(p.t);
-      const U=Q/g.h;
-      // advect t
-      const L=XR-XL;
-      p.t+=U*dt/L*0.7;
-      // keep yn proportional to duct height (streamline tracking)
-      // trail
-      const cy=(g.top+g.bot)/2;
-      const half=(g.bot-g.top)/2;
-      const px=g.x, py=cy+p.yn*half;
-      p.trail.push([px,py]);
-      if(p.trail.length>18)p.trail.shift();
-      if(p.t>1){p.t=0;p.trail=[];}
+  function stepParticles() {
+    const dt = 0.004;
+    const L = XR - XL;
+
+    particles.forEach(p => {
+
+        const g = geo(p.t);
+
+        // local mean velocity from continuity
+        const U = Q / g.h;
+
+        // advance in x-coordinate (parameter t)
+        p.t += (U * dt) / L * 25;
+
+        // recycle particle
+        if (p.t > 1) {
+            p.t = 0;
+            p.trail = [];
+        }
+
+        // particle follows same streamline
+        const cy = (g.top + g.bot) / 2;
+        const half = (g.bot - g.top) / 2;
+
+        const x = g.x;
+        const y = cy + p.yn * half;
+
+        p.trail.push([x, y]);
+
+        if (p.trail.length > 25)
+            p.trail.shift();
     });
-  }
+}
 
   function drawParticles(){
     particleGroup.selectAll('*').remove();
@@ -541,16 +556,14 @@ function renderViscous(){
   }
 
   if(animId)cancelAnimationFrame(animId);
-  function animate(){
-    if(currentTab!=='viscous')return;
-    if(playingVisc){
-      stepParticles();
-      drawParticles();
-      frame++;
-      document.getElementById('frame-info').textContent=
-        `frame ${frame} | Re ≈ ${ReStr} | ${separates?'⚠ separation active':'attached flow'}`;
+  function animate() {
+
+    if (playingPot) {
+        stepParticles();
+        drawParticles();
     }
-    animId=requestAnimationFrame(animate);
+
+    requestAnimationFrame(animate);
   }
   animate();
 
