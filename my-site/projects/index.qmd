@@ -37,15 +37,15 @@ Developed a pipeline for automated meshing and simulation of stented coronary ar
 ::: {.comparison-container}
 |Feature | This Work	| Conventional Workflow |
 |:---|:---:|:---:|
-|**Open-source**	| 🟢	| 🔴 |
-|**Fully Automated**	| 🟢	| 🟡 |
-|**Multi-domain Modeling**	| 🟢	| 🟡 |
-|**< $600 Hardware**	| 🟢	| 🔴 |
-|**< 5 min Meshing**	| 🟢	| 🔴 |
-|**Patient-specific**	| 🟢	| 🟢 |
-|**Reproducible**	| 🟢	| 🟡 |
-|**Free for HPC**	| 🟢	| 🔴 |
-|**Does not require weeks of careful human intervention and handling**	| 🟢	| 🔴 |
+|**Open-source**	| ✅	| ❌ |
+|**Fully Automated**	| ✅	| ⚠️ |
+|**Multi-domain Modeling**	| ✅	| ⚠️ |
+|**< $600 Hardware**	| ✅	| ❌ |
+|**< 5 min Meshing**	| ✅	| ❌ |
+|**Patient-specific**	| ✅	| ✅ |
+|**Reproducible**	| ✅	| ⚠️ |
+|**Free for HPC**	| ✅	| ❌ |
+|**Does not require weeks of careful human intervention and handling**	| ✅	| ❌ |
 :::
 
 Here is a working demo:
