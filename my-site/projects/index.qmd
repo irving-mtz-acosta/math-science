@@ -4,7 +4,60 @@ title: Projects
 ## Open-source automated meshing and simulation of patient-specific stented coronary arteries(Current)
 Developed a pipeline for automated meshing and simulation of stented coronary arteries. This methodology has been applied to several patient-specific cases. Due to copyright of patient data, the demonstration of this pipeline is constrained to synthetic STL geometries that closely resemble real patient-specific geometries. This was done with all *open-source software on a low-end Mac Mini M4* with 16 GB RAM, 10 CPU cores, 10 GPU cores ($500 dollar price-tag). Complete meshing setup, tagging, smoothing, and domain decomposition was done without human intervention in under 3 minutes. All visualization presented here was done with ParaView, an open-source visualization software.
 
-Hello, this is a change
+### Pipeline Comparison Matrix
+
+<style>
+  .comparison-container table {
+    border-radius: 10px;
+    overflow: hidden;
+    border-collapse: collapse;
+    width: 100%;
+    margin-top: 1em;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  }
+  .comparison-container th {
+    background-color: #f8f9fa;
+    color: #333;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    padding: 15px !important;
+  }
+  .comparison-container td {
+    padding: 12px 15px !important;
+    vertical-align: middle;
+  }
+  /* Highlight your column with a soft green glow */
+  .comparison-container td:nth-child(2) {
+    background-color: #f6fff8;
+    font-weight: 500;
+  }
+</style>
+
+#::: {.comparison-container}
+#| Feature | This Pipeline (Open-Source) | Conventional Workflows |
+#|:---|:---:|:---:|
+#| **Software Stack** | 🟢 100% Open-Source | 🔴 Proprietary Licenses |
+#| **Hardware** | 🟢 Low-end (Mac Mini M4) | 🔴 High-end Workstations |
+#| **Setup Cost** | 🟢 ~$500 USD | 🔴 $35,000+ USD |
+#| **Automation** | 🟢 Fully Automated (0 Intervention) | 🟡 Manual Tagging/Setup |
+#| **Meshing Execution Time*** | 🟢 < 3 Minutes | 🔴 Hours / Days |
+#| **HPC Compatibility** | 🟢 Yes | 🔴 Requires ProprietaryLicense|
+#<p style="font-size: 0.8rem; color: #777;">*Includes meshing, tagging, smoothing, and domain decomposition.</p>
+#:::
+
+::: {.comparison-container}
+|Feature | This Work	| Conventional Workflow |
+|:---|:---:|:---:|
+|**Open-source**	| 🟢	| 🔴 |
+|**Fully automated**	| 🟢	| 🟡 |
+|**<$600 hardware**	| 🟢	| 🔴 |
+|**< 5 min preprocessing**	| 🟢	| 🔴 |
+|**Patient-specific**	| 🟢	| 🟢 |
+|**Reproducible**	| 🟢	| 🟡 |
+|**Free for HPC**	| 🟢	| 🔴 |
+|**Does not require careful human intervention and handling**	| 🟢	| 🔴 |
+:::
 
 Here is a working demo:
 
