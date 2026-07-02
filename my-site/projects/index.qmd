@@ -34,18 +34,6 @@ Developed a pipeline for automated meshing and simulation of stented coronary ar
   }
 </style>
 
-#::: {.comparison-container}
-#| Feature | This Pipeline (Open-Source) | Conventional Workflows |
-#|:---|:---:|:---:|
-#| **Software Stack** | 🟢 100% Open-Source | 🔴 Proprietary Licenses |
-#| **Hardware** | 🟢 Low-end (Mac Mini M4) | 🔴 High-end Workstations |
-#| **Setup Cost** | 🟢 ~$500 USD | 🔴 $35,000+ USD |
-#| **Automation** | 🟢 Fully Automated (0 Intervention) | 🟡 Manual Tagging/Setup |
-#| **Meshing Execution Time*** | 🟢 < 3 Minutes | 🔴 Hours / Days |
-#| **HPC Compatibility** | 🟢 Yes | 🔴 Requires ProprietaryLicense|
-#<p style="font-size: 0.8rem; color: #777;">*Includes meshing, tagging, smoothing, and domain decomposition.</p>
-#:::
-
 ::: {.comparison-container}
 |Feature | This Work	| Conventional Workflow |
 |:---|:---:|:---:|
